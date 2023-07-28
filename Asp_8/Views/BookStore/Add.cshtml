@@ -1,0 +1,32 @@
+﻿@model BookViewModel
+
+<div class="d-flex justify-content-center">
+    <form asp-controller="BookStore" asp-action="AddBook" enctype="multipart/form-data">
+        <label class="pd10" asp-for="Name"><span>*</span></label>
+        <div>
+            <input asp-for="Name" type="text" placeholder="Title" />
+            <span asp-validation-for="Name" class="fgred"></span>
+        </div>
+
+        <label class="pd10" asp-for="Price">Price<span>*</span></label>
+        <div>
+            <input asp-for="Price" placeholder="Price" />
+            <span asp-validation-for="Price" class="fgred"></span>
+        </div>
+
+        <div class="pd15">
+            <select asp-for="Category" asp-items="@ViewBag.Brands">Select Brand</select>
+            <select asp-for="Category" asp-items="@ViewBag.Categories"> Select Category</select>
+        </div>
+        <div class="pd5">
+            <input type="text" asp-for="" /><br />
+        </div>
+        <label class="pd5" for="Description">Description<span>*</span></label>
+        <div class="pd10">
+            <input asp-for="Description" type="text" placeholder="Description" />
+        </div>
+
+        <button class="" type="submit" href="/">APPLY</button>
+    </form>
+</div>
+
