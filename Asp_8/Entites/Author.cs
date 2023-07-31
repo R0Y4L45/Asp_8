@@ -3,7 +3,8 @@
 public class Author : BaseEntity
 {
     public string Surname { get; set; } = null!;
+    
     //Navigation_Prop
-    public List<AuthorBooks>? AuthorBooks { get; set; }
+    public List<Books>? Book { get; set; }
 
 }

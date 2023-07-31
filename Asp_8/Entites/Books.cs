@@ -19,5 +19,6 @@ public class Books : BaseEntity
     public int PressId { get; set; }
     public Press? Press { get; set; }
 
-    public List<AuthorBooks>? AuthorBooks { get; set; }
+    public int AuthorId { get; set; }
+    public Author? Author { get; set; }
 }

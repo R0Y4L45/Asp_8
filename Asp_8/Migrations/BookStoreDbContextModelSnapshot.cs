@@ -42,7 +42,7 @@ namespace Asp_8.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("Asp_8.Entites.AuthorBooks", b =>
+            modelBuilder.Entity("Asp_8.Entites.Books", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,26 +52,6 @@ namespace Asp_8.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("AuthorBooks");
-                });
-
-            modelBuilder.Entity("Asp_8.Entites.Books", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -96,6 +76,8 @@ namespace Asp_8.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
 
@@ -157,27 +139,14 @@ namespace Asp_8.Migrations
                     b.ToTable("Themes");
                 });
 
-            modelBuilder.Entity("Asp_8.Entites.AuthorBooks", b =>
+            modelBuilder.Entity("Asp_8.Entites.Books", b =>
                 {
                     b.HasOne("Asp_8.Entites.Author", "Author")
-                        .WithMany("AuthorBooks")
+                        .WithMany("Book")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Asp_8.Entites.Books", "Book")
-                        .WithMany("AuthorBooks")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("Asp_8.Entites.Books", b =>
-                {
                     b.HasOne("Asp_8.Entites.Category", "Category")
                         .WithMany("Books")
                         .HasForeignKey("CategoryId")
@@ -196,6 +165,8 @@ namespace Asp_8.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Author");
+
                     b.Navigation("Category");
 
                     b.Navigation("Press");
@@ -205,12 +176,7 @@ namespace Asp_8.Migrations
 
             modelBuilder.Entity("Asp_8.Entites.Author", b =>
                 {
-                    b.Navigation("AuthorBooks");
-                });
-
-            modelBuilder.Entity("Asp_8.Entites.Books", b =>
-                {
-                    b.Navigation("AuthorBooks");
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Asp_8.Entites.Category", b =>

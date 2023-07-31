@@ -1,32 +1,71 @@
 ﻿@model BookViewModel
 
 <div class="d-flex justify-content-center">
-    <form asp-controller="BookStore" asp-action="AddBook" enctype="multipart/form-data">
-        <label class="pd10" asp-for="Name"><span>*</span></label>
+    <form asp-controller="BookStore" asp-action="Add" enctype="multipart/form-data">
+        <label class="pd10">Book Name<span>*</span></label>
         <div>
-            <input asp-for="Name" type="text" placeholder="Title" />
-            <span asp-validation-for="Name" class="fgred"></span>
+            <input asp-for="Name" placeholder="----" />
+            <span class="text-danger" asp-validation-for="Name" class="fgred" autocomplete="off"></span>
         </div>
-
-        <label class="pd10" asp-for="Price">Price<span>*</span></label>
-        <div>
-            <input asp-for="Price" placeholder="Price" />
-            <span asp-validation-for="Price" class="fgred"></span>
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Price<span>*</span></label>
+            </div>
+            <input asp-for="Price" />
+            <span class="text-danger" asp-validation-for="Price" class="fgred"></span>
         </div>
-
-        <div class="pd15">
-            <select asp-for="Category" asp-items="@ViewBag.Brands">Select Brand</select>
-            <select asp-for="Category" asp-items="@ViewBag.Categories"> Select Category</select>
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Count<span>*</span></label>
+            </div>
+            <input id="Count" asp-for="Count" />
+            <span class="text-danger" asp-validation-for="Count" class="fgred"></span>
         </div>
-        <div class="pd5">
-            <input type="text" asp-for="" /><br />
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Category<span>*</span></label>
+            </div>
+            <input asp-for="Category" placeholder="--------" />
+            <span class="text-danger" asp-validation-for="Category" class="fgred"></span>
         </div>
-        <label class="pd5" for="Description">Description<span>*</span></label>
-        <div class="pd10">
-            <input asp-for="Description" type="text" placeholder="Description" />
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Theme<span>*</span></label>
+            </div>
+            <input asp-for="Theme" placeholder="-----" />
+            <span class="text-danger" asp-validation-for="Theme" class="fgred"></span>
         </div>
-
-        <button class="" type="submit" href="/">APPLY</button>
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Press<span>*</span></label>
+            </div>
+            <input asp-for="Press" placeholder="-----" />
+            <span class="text-danger" asp-validation-for="Press" class="fgred"></span>
+        </div>
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Author Name<span>*</span></label>
+            </div>
+            <input asp-for="AuthorName" placeholder="----" />
+            <span class="text-danger" asp-validation-for="AuthorName" class="fgred"></span>
+        </div>
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Author Surname<span>*</span></label>
+            </div>
+            <input asp-for="AuthorSurname" placeholder="-------" />
+            <span class="text-danger" asp-validation-for="AuthorSurname" class="fgred"></span>
+        </div>
+        <div style="margin-top: 12px">
+            <div>
+                <label class="pd10">Description<span>*</span></label>
+            </div>
+            <input asp-for="Description" placeholder="-----------" />
+            <span class="text-danger" asp-validation-for="Description" class="fgred"></span>
+        </div>
+        <div style="margin-top: 24px">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">APPLY</button>
+        </div>
     </form>
 </div>
 

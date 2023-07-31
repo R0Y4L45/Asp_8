@@ -1,12 +1,15 @@
 ﻿using Asp_8.Context;
 using Asp_8.Entites;
+using Asp_8.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Asp_8.Controllers;
 
 public class BookStoreController : Controller
 {
     private readonly BookStoreDbContext _bookStoreDbContext;
+    private Books? _book;
     public BookStoreController(BookStoreDbContext bookStoreDbContext)
     {
         _bookStoreDbContext = bookStoreDbContext;
@@ -59,34 +62,153 @@ public class BookStoreController : Controller
         //_bookStoreDbContext.SaveChanges();
     }
 
-    public IActionResult Main()
+    public IActionResult Main(string message)
     {
-        if(_bookStoreDbContext.Books != null) 
+        if (_bookStoreDbContext.Books != null)
         {
-            var anonymous = (from b in _bookStoreDbContext.Books
-                             join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
-                             join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
-                             join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
-                             join ab in _bookStoreDbContext.AuthorBooks! on b.Id equals ab.BookId
-                             join a in _bookStoreDbContext.Authors! on ab.AuthorId equals a.Id
-                select new
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                    Price = b.Price,
-                    Count = b.Count,
-                    Description = b.Description,
-                    CategoryName = c.Name,
-                    AuthorName = a.Name,
-                    AuthorSurname = a.Surname,
-                    ThemeName = t.Name,
-                    PressName = p.Name
-                });
-
-            ViewBag.Dt = anonymous;
+            IQueryable<BookViewModel> bvm = (from b in _bookStoreDbContext.Books
+                                             join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
+                                             join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
+                                             join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
+                                             join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
+                                             select new BookViewModel
+                                             {
+                                                 BookId = b.Id,
+                                                 Name = b.Name,
+                                                 Price = b.Price,
+                                                 Count = b.Count,
+                                                 Description = b.Description,
+                                                 Category = c.Name,
+                                                 AuthorName = a.Name,
+                                                 AuthorSurname = a.Surname,
+                                                 Theme = t.Name,
+                                                 Press = p.Name
+                                             });
+            ViewBag.Dt = bvm;
         }
 
+        return View("Main", message);
+    }
 
+    public IActionResult Add()
+    {
+        return View(new BookViewModel());
+    }
+
+    [HttpPost]
+    public IActionResult Add(BookViewModel bvm)
+    {
+        if (ModelState.IsValid)
+        {
+            bool flag = false;
+            int aId = _bookStoreDbContext.Authors!.Where(aut => aut.Name == bvm.AuthorName && aut.Surname == bvm.AuthorSurname).Select(aut => aut.Id).FirstOrDefault();
+            int cId = _bookStoreDbContext.Categories!.Where(c => c.Name == bvm.Category).Select(c => c.Id).FirstOrDefault();
+            int tId = _bookStoreDbContext.Themes!.Where(t => t.Name == bvm.Theme).Select(t => t.Id).FirstOrDefault();
+            int pId = _bookStoreDbContext.Presses!.Where(aut => aut.Name == bvm.Press).Select(p => p.Id).FirstOrDefault();
+
+            if (aId == 0)
+            {
+                _bookStoreDbContext.Authors?.Add(new Author { Name = bvm.AuthorName, Surname = bvm.AuthorSurname });
+                aId = _bookStoreDbContext.Authors!.Count() + 1;
+            }
+            if (cId == 0)
+            {
+                _bookStoreDbContext.Categories?.Add(new Category { Name = bvm.Category });
+                cId = _bookStoreDbContext.Categories!.Count() + 1;
+            }
+            if (tId == 0)
+            {
+                _bookStoreDbContext.Themes?.Add(new Theme { Name = bvm.Theme });
+                tId = _bookStoreDbContext.Themes!.Count() + 1;
+            }
+            if (pId == 0)
+            {
+                _bookStoreDbContext.Presses?.Add(new Press { Name = bvm.Press });
+                pId = _bookStoreDbContext.Presses!.Count() + 1;
+            }
+
+            _bookStoreDbContext.SaveChanges();
+
+            if (_bookStoreDbContext.Books!.Where(b => b.Name == bvm.Name && b.PressId == pId && b.CategoryId == cId && b.AuthorId == aId).FirstOrDefault() == null)
+            {
+                _bookStoreDbContext.Books?.Add(new Books
+                {
+                    Name = bvm.Name,
+                    Price = bvm.Price,
+                    Count = bvm.Count,
+                    Description = bvm.Description ?? "",
+                    PressId = pId,
+                    CategoryId = cId,
+                    ThemeId = tId,
+                    AuthorId = aId
+                });
+
+                flag = true;
+            }
+            _bookStoreDbContext.SaveChanges();
+
+
+            return RedirectToAction("Main", flag ? new { message = $"Book : {bvm.Name} added ;-)" } : new { message = $"Book : {bvm.Name} has been added by YOU ;-)" });
+        }
+        return View();
+    }
+
+    public IActionResult Delete(int id)
+    {
+        _bookStoreDbContext.Books!.Remove(_bookStoreDbContext.Books.Where(x => x.Id == id).First());
+        _bookStoreDbContext.SaveChanges();
+        return RedirectToAction("Main", new { message = "Book was deleted by YOU ;-(" });
+    }
+
+    public IActionResult Edit(int id)
+    {
+        var bvm = (from b in _bookStoreDbContext.Books
+                   join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
+                   join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
+                   join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
+                   join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
+                   where a.Id == id
+                   select new BookViewModel
+                   {
+                       BookId = id,
+                       Name = b.Name,
+                       Price = b.Price,
+                       Count = b.Count,
+                       Description = b.Description,
+                       Category = c.Name,
+                       AuthorName = a.Name,
+                       AuthorSurname = a.Surname,
+                       Theme = t.Name,
+                       Press = p.Name
+                   }).First(bvm => bvm.BookId == id);
+
+        return View(bvm);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(BookViewModel bvm)
+    {
+        if (ModelState.IsValid)
+        {
+            Books? b = _bookStoreDbContext.Books?.First(b => b.Id == bvm.BookId);
+            Category? c = _bookStoreDbContext.Categories?.First(c => c.Id == b!.CategoryId);
+            Press? p = _bookStoreDbContext.Presses?.First(p => p.Id == b!.PressId);
+            Theme? t = _bookStoreDbContext.Themes?.First(t => t.Id == b!.ThemeId);
+            Author? a = _bookStoreDbContext.Authors?.First(a => a.Name == bvm.AuthorName && a.Surname == bvm.AuthorSurname);
+            b!.Name = bvm.Name;
+            b.Price = bvm.Price;
+            b.Count = bvm.Count;
+            b.Description = bvm.Description;
+            c!.Name = bvm.Category;
+            p!.Name = bvm.Press;
+            t!.Name = bvm.Theme;
+            a!.Name = bvm.AuthorName;
+            a.Surname = bvm.AuthorSurname;
+
+            _bookStoreDbContext.SaveChanges();
+
+            return RedirectToAction("Main", new { message = $"Book => {bvm.Name} has been changed..)" });
+        }
         return View();
     }
 }

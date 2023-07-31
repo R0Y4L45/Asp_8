@@ -1,39 +1,62 @@
-﻿@*@model AddProductViewModel
+﻿@model BookViewModel
 
+<style>
+    div {
+        margin-top: 24px;
+    }
+</style>
 <h2>Edit Product</h2>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
-
+<form asp-asp-controller="bookStore" asp-action="Edit">
     <div class="form-group">
-        <label asp-for="Title">Title</label>
-        <input asp-for="Title" class="form-control" />
+        <label asp-for="BookId"></label>
+        <input asp-for="BookId" class="form-control" readonly />
     </div>
-
     <div class="form-group">
-        <label asp-for="Description">Description</label>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
         <textarea asp-for="Description" class="form-control"></textarea>
     </div>
-
     <div class="form-group">
-        <label asp-for="Price">Price</label>
+        <label asp-for="Price"></label>
         <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price"></span>
     </div>
-
     <div class="form-group">
-        <label asp-for="CategoryId">Category</label>
-        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
-            <option value="">Select a category</option>
-        </select>
+        <label asp-for="Count"></label>
+        <input asp-for="Count" class="form-control" />
+        <span asp-validation-for="Count"></span>
     </div>
-
     <div class="form-group">
-        <label asp-for="BrandId">Brand</label>
-        <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-control">
-            <option value="">Select a brand</option>
-        </select>
+        <label asp-for="Press"></label>
+        <input asp-for="Press" class="form-control" />
+        <span asp-validation-for="Press"></span>
     </div>
-
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <div class="form-group">
+        <label asp-for="Theme"></label>
+        <input asp-for="Theme" class="form-control" />
+        <span asp-validation-for="Theme"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category"></label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AuthorName"></label>
+        <input asp-for="AuthorName" class="form-control" />
+        <span asp-validation-for="AuthorName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AuthorSurname"></label>
+        <input asp-for="AuthorSurname" class="form-control" />
+        <span asp-validation-for="AuthorSurname"></span>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </div>
 </form>
-*@
