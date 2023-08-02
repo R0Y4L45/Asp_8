@@ -9,52 +9,54 @@
 
 <form asp-asp-controller="bookStore" asp-action="Edit">
     <div class="form-group">
-        <label asp-for="BookId"></label>
-        <input asp-for="BookId" class="form-control" readonly />
-    </div>
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="Price"></label>
-        <input asp-for="Price" class="form-control" />
-        <span asp-validation-for="Price"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Count"></label>
-        <input asp-for="Count" class="form-control" />
-        <span asp-validation-for="Count"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Press"></label>
-        <input asp-for="Press" class="form-control" />
-        <span asp-validation-for="Press"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Theme"></label>
-        <input asp-for="Theme" class="form-control" />
-        <span asp-validation-for="Theme"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Category"></label>
-        <input asp-for="Category" class="form-control" />
-        <span asp-validation-for="Category"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="AuthorName"></label>
-        <input asp-for="AuthorName" class="form-control" />
-        <span asp-validation-for="AuthorName"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="AuthorSurname"></label>
-        <input asp-for="AuthorSurname" class="form-control" />
-        <span asp-validation-for="AuthorSurname"></span>
+        <div class="form-group">
+            <label asp-for="BookId"></label>
+            <input asp-for="BookId" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span class=" text-danger" asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+            <span class="text-danger" asp-validation-for="Price"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Count"></label>
+            <input asp-for="Count" class="form-control" />
+            <span class="text-danger" asp-validation-for="Count"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Press"></label>
+            <input asp-for="Press" class="form-control" />
+            <span class="text-danger" asp-validation-for="Press"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Theme"></label>
+            <input asp-for="Theme" class="form-control" />
+            <span class="text-danger" asp-validation-for="Theme"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Category"></label>
+            <input asp-for="Category" class="form-control" />
+            <span class="text-danger" asp-validation-for="Category"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AuthorName"></label>
+            <input asp-for="AuthorName" class="form-control" />
+            <span class="text-danger" asp-validation-for="AuthorName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AuthorSurname"></label>
+            <input asp-for="AuthorSurname" class="form-control" />
+            <span class="text-danger" asp-validation-for="AuthorSurname"></span>
+        </div>
     </div>
     <div>
         <button type="submit" class="btn btn-primary">Save Changes</button>

@@ -64,9 +64,12 @@ public class BookStoreController : Controller
 
     public IActionResult Main(string message)
     {
+        Book_messageVM bmVm = new Book_messageVM();
+        
         if (_bookStoreDbContext.Books != null)
         {
-            IQueryable<BookViewModel> bvm = (from b in _bookStoreDbContext.Books
+
+            bmVm.BookViewModels = (from b in _bookStoreDbContext.Books
                                              join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
                                              join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
                                              join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
@@ -84,10 +87,10 @@ public class BookStoreController : Controller
                                                  Theme = t.Name,
                                                  Press = p.Name
                                              });
-            ViewBag.Dt = bvm;
+            bmVm.Message = message;
         }
 
-        return View("Main", message);
+        return View("Main", bmVm);
     }
 
     public IActionResult Add()
@@ -160,14 +163,14 @@ public class BookStoreController : Controller
         return RedirectToAction("Main", new { message = "Book was deleted by YOU ;-(" });
     }
 
-    public IActionResult Edit(int id)
+    public IActionResult Edit(int id = 0)
     {
         var bvm = (from b in _bookStoreDbContext.Books
                    join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
                    join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
                    join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
                    join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
-                   where a.Id == id
+                   where b.Id == id
                    select new BookViewModel
                    {
                        BookId = id,
@@ -180,7 +183,7 @@ public class BookStoreController : Controller
                        AuthorSurname = a.Surname,
                        Theme = t.Name,
                        Press = p.Name
-                   }).First(bvm => bvm.BookId == id);
+                   }).FirstOrDefault();
 
         return View(bvm);
     }
@@ -194,7 +197,7 @@ public class BookStoreController : Controller
             Category? c = _bookStoreDbContext.Categories?.First(c => c.Id == b!.CategoryId);
             Press? p = _bookStoreDbContext.Presses?.First(p => p.Id == b!.PressId);
             Theme? t = _bookStoreDbContext.Themes?.First(t => t.Id == b!.ThemeId);
-            Author? a = _bookStoreDbContext.Authors?.First(a => a.Name == bvm.AuthorName && a.Surname == bvm.AuthorSurname);
+            Author? a = _bookStoreDbContext.Authors?.First(a => a.Id == b!.AuthorId);
             b!.Name = bvm.Name;
             b.Price = bvm.Price;
             b.Count = bvm.Count;
