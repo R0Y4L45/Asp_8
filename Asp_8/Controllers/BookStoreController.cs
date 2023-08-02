@@ -2,14 +2,12 @@
 using Asp_8.Entites;
 using Asp_8.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Asp_8.Controllers;
 
 public class BookStoreController : Controller
 {
     private readonly BookStoreDbContext _bookStoreDbContext;
-    private Books? _book;
     public BookStoreController(BookStoreDbContext bookStoreDbContext)
     {
         _bookStoreDbContext = bookStoreDbContext;
@@ -68,7 +66,6 @@ public class BookStoreController : Controller
         
         if (_bookStoreDbContext.Books != null)
         {
-
             bmVm.BookViewModels = (from b in _bookStoreDbContext.Books
                                              join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
                                              join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
@@ -93,10 +90,7 @@ public class BookStoreController : Controller
         return View("Main", bmVm);
     }
 
-    public IActionResult Add()
-    {
-        return View(new BookViewModel());
-    }
+    public IActionResult Add() => View(new BookViewModel());
 
     [HttpPost]
     public IActionResult Add(BookViewModel bvm)
