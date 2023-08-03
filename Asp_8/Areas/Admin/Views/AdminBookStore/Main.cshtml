@@ -1,6 +1,11 @@
 ﻿@model IQueryable<BookViewModel>
 
 <div class="container">
+    <div class="text-center">
+        <h1 class="bg-warning">Admin page</h1>
+    </div>
+
+
     @if (TempData["N"] != null && TempData["N"]?.ToString() != string.Empty)
     {
         if (TempData["N"]?.ToString()?.Last() == ')')
@@ -19,11 +24,16 @@
         TempData["N"] = string.Empty;
     }
 
-    <div class="row align-items-center">
+    <div class="row d-flex align-content-around">
         <div class="col-md-6 my-lg-5">
             <a class="btn btn-primary btn-lg btn-block" asp-area="Admin" asp-controller="AdminBookStore" asp-action="Add">Add New</a>
         </div>
+
+        <div class="col-md-6 my-lg-5">
+            <a class="btn btn-primary btn-lg btn-block" asp-area="User" asp-controller="BookStore" asp-action="Main">Go to User</a>
+        </div>
     </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
