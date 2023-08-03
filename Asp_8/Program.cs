@@ -1,4 +1,5 @@
 using Asp_8.Context;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
 namespace Asp_8;
@@ -34,7 +35,20 @@ public class Program
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=BookStore}/{action=Main}/{id?}");
+            pattern: "{area:exists?}/{controller=BookStore}/{action=Main}/{id?}"
+            );
+
+        app.MapAreaControllerRoute(
+            name: "admin_default",
+            areaName: "admin",
+            pattern: "{admin}/{controller=AdminBookStore}/{action=Main}/{id?}"
+            );
+
+        app.MapAreaControllerRoute(
+            name: "user_default",
+            areaName: "user",
+            pattern: "{user}/{controller=BookStore}/{action=Main}/{id?}"
+            );
 
         app.Run();
     }

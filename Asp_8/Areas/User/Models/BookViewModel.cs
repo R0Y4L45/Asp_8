@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-namespace Asp_8.Models;
+
+namespace Asp_8.Areas.User.Models;
 
 public class BookViewModel
 {
     public int BookId { get; set; }
     [DisplayName("Book Name")]
     public string Name { get; set; } = null!;
-    
+
     [Range(0, (double)decimal.MaxValue, ErrorMessage = "Only positive number allowed")]
     public decimal Price { get; set; }
 

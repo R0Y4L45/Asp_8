@@ -1,27 +1,6 @@
-﻿@model Book_messageVM
+﻿@model IQueryable<BookViewModel>
 
 <div class="container">
-    @if (Model != null && Model.Message != null)
-    {
-        if (Model.Message.Last() == ')')
-        {
-            <div class="alert alert-success">
-                <strong>Success!</strong> @Model
-            </div>
-        }
-        else if (Model.Message.Last() == '(')
-        {
-            <div class="alert alert-danger">
-                <strong>Success!</strong> @Model
-            </div>
-        }
-    }
-
-    <div class="row align-items-center">
-        <div class="col-md-6 my-lg-5">
-            <a class="btn btn-primary btn-lg btn-block" href="/bookStore/add">Add New</a>
-        </div>
-    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="table-responsive">
@@ -37,10 +16,9 @@
                             <th class="text-center" scope="col">Price</th>
                             <th class="text-center" scope="col">Count</th>
                             <th class="text-center" scope="col">Description</th>
-                            <th class="text-center" scope="col" style="width: 200px;">Action</th>
                         </tr>
                     </thead>
-                    <books Items="@Model"></books>
+                    <books Area=false Items="@Model"></books>
                 </table>
             </div>
         </div>
