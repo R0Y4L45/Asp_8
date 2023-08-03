@@ -7,8 +7,14 @@ namespace Asp_8.TagHelpers;
 [HtmlTargetElement("books")]
 public class BooksTagHelper : TagHelper
 {
+    private const string itemsAttribute = "Items";
+    [HtmlAttributeName(itemsAttribute)]
     public Book_messageVM? Items { get; set; }
+
+    private const string IdAttribute = "Id";
+    [HtmlAttributeName(IdAttribute)]
     public int Id { get; set; } = default;
+
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
         output.TagName = "tbody";
