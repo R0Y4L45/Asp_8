@@ -1,0 +1,9 @@
+﻿@model CategoryViewModel
+
+<ul class="list-group">
+    <li class="bg-dark text-white list-group-item text-center"><strong>Categories</strong></li>
+    @foreach (var item in Model.Categories!)
+    {
+        <li class="list-group-item text-center list-group-item-action">@item.Name</li>
+    }
+</ul>

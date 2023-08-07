@@ -1,6 +1,4 @@
-﻿
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,15 +16,24 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ">
+                        <li class="px-lg-5 nav-item list-unstyled d-md-inline">
+                            <a class="nav-link btn btn-outline-secondary " asp-area="Admin" asp-controller="AdminBookStore" asp-action="Add">Add New</a>
+                        </li>
+                        <li class="nav-item list-unstyled d-md-inline">
+                            <a class="nav-link btn btn-outline-secondary " asp-area="User" asp-controller="BookStore" asp-action="Main">Go to User</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div>
+        <main>
             @RenderBody()
         </main>
     </div>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

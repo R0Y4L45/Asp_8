@@ -1,68 +1,76 @@
-﻿@model BookViewModel
+﻿@{
+    Layout = null;
+}
+@model BookViewModel
 
-<div class="d-flex justify-content-center">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<div>
+    <a class="nav-link btn btn-outline-secondary " asp-area="Admin" asp-controller="AdminBookStore" asp-action="Main">Return Back</a>
+</div>
+<div class="m-4 d-flex justify-content-center">
     <form asp-area="Admin" asp-controller="AdminBookStore" asp-action="Add" enctype="multipart/form-data">
-        <div class="form-control">
 
+        <div class="form-control">
             <label class="pd10">Book Name<span>*</span></label>
             <div>
-                <input asp-for="Name" placeholder="----" />
+                <input class="d-block" asp-for="Name" placeholder="----" />
                 <span class="text-danger" asp-validation-for="Name" class="fgred" autocomplete="off"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Price<span>*</span></label>
                 </div>
-                <input asp-for="Price" />
+                <input class="d-block" asp-for="Price" />
                 <span class="text-danger" asp-validation-for="Price" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Count<span>*</span></label>
                 </div>
-                <input id="Count" asp-for="Count" />
+                <input class="d-block" class="d-block" id="Count" asp-for="Count" />
                 <span class="text-danger" asp-validation-for="Count" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Category<span>*</span></label>
                 </div>
-                <input asp-for="Category" placeholder="--------" />
+                <input class="d-block" asp-for="Category" placeholder="--------" />
                 <span class="text-danger" asp-validation-for="Category" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Theme<span>*</span></label>
                 </div>
-                <input asp-for="Theme" placeholder="-----" />
+                <input class="d-block" asp-for="Theme" placeholder="-----" />
                 <span class="text-danger" asp-validation-for="Theme" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Press<span>*</span></label>
                 </div>
-                <input asp-for="Press" placeholder="-----" />
+                <input class="d-block" asp-for="Press" placeholder="-----" />
                 <span class="text-danger" asp-validation-for="Press" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Author Name<span>*</span></label>
                 </div>
-                <input asp-for="AuthorName" placeholder="----" />
+                <input class="d-block" asp-for="AuthorName" placeholder="----" />
                 <span class="text-danger" asp-validation-for="AuthorName" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Author Surname<span>*</span></label>
                 </div>
-                <input asp-for="AuthorSurname" placeholder="-------" />
+                <input class="d-block" asp-for="AuthorSurname" placeholder="-------" />
                 <span class="text-danger" asp-validation-for="AuthorSurname" class="fgred"></span>
             </div>
             <div style="margin-top: 12px">
                 <div>
                     <label class="pd10">Description<span>*</span></label>
                 </div>
-                <input asp-for="Description" placeholder="-----------" />
+                <input class="d-block" asp-for="Description" placeholder="-----------" />
                 <span class="text-danger" asp-validation-for="Description" class="fgred"></span>
             </div>
             <div style="margin-top: 24px">

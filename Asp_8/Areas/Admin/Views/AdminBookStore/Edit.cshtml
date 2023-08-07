@@ -1,14 +1,20 @@
-﻿@model BookViewModel
+﻿@{
+    Layout = "";
+}
+
+@model BookViewModel
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 <style>
     div {
         margin-top: 24px;
     }
 </style>
-<h2>Edit Product</h2>
 
 <form asp-area="Admin" asp-controller="AdminBookStore" asp-action="Edit">
-    <div class="form-group">
+    <div class="container-fluid form-group">
+        <h2>Edit Product</h2>
         <div class="form-group">
             <label asp-for="BookId"></label>
             <input asp-for="BookId" class="form-control" readonly />
@@ -57,8 +63,8 @@
             <input asp-for="AuthorSurname" class="form-control" />
             <span class="text-danger" asp-validation-for="AuthorSurname"></span>
         </div>
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
     </div>
 </form>

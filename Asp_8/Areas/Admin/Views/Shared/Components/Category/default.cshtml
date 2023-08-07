@@ -1,0 +1,10 @@
+﻿@model CategoryViewModel
+
+<ul class="list-group">
+    <li class="bg-dark text-white list-group-item text-center" asp><strong>Categories</strong></li>
+    @foreach (var item in Model.Categories!)
+    {
+        <asp:Button></asp:Button>
+        <li class="list-group-item text-center list-group-item-action">@item.Name</li>
+    }
+</ul>

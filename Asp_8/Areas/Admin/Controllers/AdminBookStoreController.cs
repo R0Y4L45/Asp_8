@@ -13,6 +13,7 @@ public class AdminBookStoreController : Controller
     public AdminBookStoreController(BookStoreDbContext bookStoreDbContext)
     {
         _bookStoreDbContext = bookStoreDbContext;
+
         //_bookStoreDbContext.Add(new Category { Name = "SQL Language" });
         //_bookStoreDbContext.Add(new Category { Name = "C++ Builder" });
         //_bookStoreDbContext.Add(new Category { Name = "Delphi" });
@@ -37,13 +38,6 @@ public class AdminBookStoreController : Controller
         //_bookStoreDbContext.Add(new Press { Name = "Nauka" });
         //_bookStoreDbContext.Add(new Press { Name = "Binom" });
 
-        //_bookStoreDbContext.Add(new Books { Name = "SQL", Count = 12, PressId = 1, ThemeId = 1, Description = "BestSeller", Price = 3.2M, CategoryId = 1 });
-        //_bookStoreDbContext.Add(new Books { Name = "3D Studio Max 3", Count = 22, PressId = 2, ThemeId = 2, Description = "Sold", Price = 2.2M, CategoryId = 2 });
-        //_bookStoreDbContext.Add(new Books { Name = "Visual Basic 6", Count = 15, PressId = 3, ThemeId = 1, Description = "BestSeller", Price = 1.8M, CategoryId = 5 });
-        //_bookStoreDbContext.Add(new Books { Name = @"C++ Builder", Count = 14, PressId = 4, ThemeId = 4, Description = "BestSeller", Price = 3.3M, CategoryId = 4 });
-        //_bookStoreDbContext.Add(new Books { Name = "Mathcad", Count = 21, PressId = 5, ThemeId = 3, Description = "BestSeller", Price = 4.2M, CategoryId = 3 });
-        //_bookStoreDbContext.Add(new Books { Name = "Delphi helper", Count = 10, PressId = 3, ThemeId = 5, Description = "BestSeller", Price = 3.6M, CategoryId = 6 });
-
         //_bookStoreDbContext.Add(new Author { Name = "James", Surname = "Groff" });
         //_bookStoreDbContext.Add(new Author { Name = "Michael", Surname = "Marows" });
         //_bookStoreDbContext.Add(new Author { Name = "Boris", Surname = "Carpov" });
@@ -51,12 +45,12 @@ public class AdminBookStoreController : Controller
         //_bookStoreDbContext.Add(new Author { Name = "Kevin", Surname = "Reichard" });
         //_bookStoreDbContext.Add(new Author { Name = "Olga", Surname = "Kokoreva" });
 
-        //_bookStoreDbContext.Add(new AuthorBooks { BookId = 1, AuthorId = 1 });
-        //_bookStoreDbContext.Add(new AuthorBooks { BookId = 2, AuthorId = 2 });
-        //_bookStoreDbContext.Add(new AuthorBooks { BookId = 3, AuthorId = 3 });
-        //_bookStoreDbContext.Add(new AuthorBooks { BookId = 4, AuthorId = 4 });
-        //_bookStoreDbContext.Add(new AuthorBooks { BookId = 5, AuthorId = 5 });
-        //_bookStoreDbContext.Add(new AuthorBooks { BookId = 6, AuthorId = 6 });
+        //_bookStoreDbContext.Add(new Books { Name = "SQL", Count = 12, PressId = 1, ThemeId = 1, Description = "BestSeller", Price = 3.2M, CategoryId = 1, AuthorId = 1 });
+        //_bookStoreDbContext.Add(new Books { Name = "3D Studio Max 3", Count = 22, PressId = 2, ThemeId = 2, Description = "Sold", Price = 2.2M, CategoryId = 2, AuthorId = 2 });
+        //_bookStoreDbContext.Add(new Books { Name = "Visual Basic 6", Count = 15, PressId = 3, ThemeId = 1, Description = "BestSeller", Price = 1.8M, CategoryId = 5, AuthorId = 3 });
+        //_bookStoreDbContext.Add(new Books { Name = @"C++ Builder", Count = 14, PressId = 4, ThemeId = 4, Description = "BestSeller", Price = 3.3M, CategoryId = 4, AuthorId = 4 });
+        //_bookStoreDbContext.Add(new Books { Name = "Mathcad", Count = 21, PressId = 5, ThemeId = 3, Description = "BestSeller", Price = 4.2M, CategoryId = 3, AuthorId = 5 });
+        //_bookStoreDbContext.Add(new Books { Name = "Delphi helper", Count = 10, PressId = 3, ThemeId = 5, Description = "BestSeller", Price = 3.6M, CategoryId = 6, AuthorId = 6 });
 
         //_bookStoreDbContext.SaveChanges();
     }
@@ -64,23 +58,23 @@ public class AdminBookStoreController : Controller
     public IActionResult Main()
     {
         IQueryable<BookViewModel> bvm = (from b in _bookStoreDbContext.Books
-               join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
-               join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
-               join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
-               join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
-               select new BookViewModel
-               {
-                   BookId = b.Id,
-                   Name = b.Name,
-                   Price = b.Price,
-                   Count = b.Count,
-                   Description = b.Description,
-                   Category = c.Name,
-                   AuthorName = a.Name,
-                   AuthorSurname = a.Surname,
-                   Theme = t.Name,
-                   Press = p.Name
-               });
+                                         join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
+                                         join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
+                                         join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
+                                         join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
+                                         select new BookViewModel
+                                         {
+                                             BookId = b.Id,
+                                             Name = b.Name,
+                                             Price = b.Price,
+                                             Count = b.Count,
+                                             Description = b.Description,
+                                             Category = c.Name,
+                                             AuthorName = a.Name,
+                                             AuthorSurname = a.Surname,
+                                             Theme = t.Name,
+                                             Press = p.Name
+                                         });
 
         return View(bvm);
     }
