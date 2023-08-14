@@ -1,6 +1,6 @@
 ﻿using Asp_8.Entites;
 
-namespace Asp_8.Areas.User.Models;
+namespace BookStore.WebUI.Areas.User.Models;
 
 public class CategoryViewModel
 {

@@ -1,9 +1,9 @@
-﻿using Asp_8.Areas.User.Models;
-using Asp_8.Context;
+﻿using Asp_8.Context;
+using BookStore.WebUI.Areas.User.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 
-namespace Asp_8.ViewComponents;
+namespace BookStore.WebUI.ViewComponents;
 
 public class CategoryViewComponent : ViewComponent
 {
@@ -13,5 +13,5 @@ public class CategoryViewComponent : ViewComponent
         _dbContext = dbContext;
     }
 
-    public ViewViewComponentResult Invoke() => View(new CategoryViewModel { Categories = _dbContext?.Categories?.ToList() }); 
+    public ViewViewComponentResult Invoke() => View(new CategoryViewModel { Categories = _dbContext?.Categories?.ToList() });
 }

@@ -2,7 +2,7 @@ using Asp_8.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
-namespace Asp_8;
+namespace BookStore.WebUI;
 
 public class Program
 {

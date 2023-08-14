@@ -1,9 +1,9 @@
-﻿using Asp_8.Areas.User.Models;
-using Asp_8.Context;
+﻿using Asp_8.Context;
 using Asp_8.Entites;
+using BookStore.WebUI.Areas.User.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Asp_8.Areas.Admin.Controllers;
+namespace BookStore.WebUI.Areas.Admin.Controllers;
 
 [Area("Admin")]
 public class AdminBookStoreController : Controller
@@ -57,24 +57,24 @@ public class AdminBookStoreController : Controller
 
     public IActionResult Main()
     {
-        IQueryable<BookViewModel> bvm = (from b in _bookStoreDbContext.Books
-                                         join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
-                                         join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
-                                         join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
-                                         join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
-                                         select new BookViewModel
-                                         {
-                                             BookId = b.Id,
-                                             Name = b.Name,
-                                             Price = b.Price,
-                                             Count = b.Count,
-                                             Description = b.Description,
-                                             Category = c.Name,
-                                             AuthorName = a.Name,
-                                             AuthorSurname = a.Surname,
-                                             Theme = t.Name,
-                                             Press = p.Name
-                                         });
+        IQueryable<BookViewModel> bvm = from b in _bookStoreDbContext.Books
+                                        join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
+                                        join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
+                                        join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
+                                        join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
+                                        select new BookViewModel
+                                        {
+                                            BookId = b.Id,
+                                            Name = b.Name,
+                                            Price = b.Price,
+                                            Count = b.Count,
+                                            Description = b.Description,
+                                            Category = c.Name,
+                                            AuthorName = a.Name,
+                                            AuthorSurname = a.Surname,
+                                            Theme = t.Name,
+                                            Press = p.Name
+                                        };
 
         return View(bvm);
     }
@@ -132,8 +132,10 @@ public class AdminBookStoreController : Controller
             }
             _bookStoreDbContext.SaveChanges();
 
+            if (_flag) TempData["N"] = $"Book : {bvm.Name} added ;-)";
+            else TempData["N"] = $"Book : {bvm.Name} has been added by YOU ;-)";
 
-            return RedirectToAction("Main", _flag ? new { message = $"Book : {bvm.Name} added ;-)" } : new { message = $"Book : {bvm.Name} has been added by YOU ;-)" });
+            return RedirectToAction("Main");
         }
         return View();
     }

@@ -1,8 +1,8 @@
-﻿using Asp_8.Areas.User.Models;
+﻿using BookStore.WebUI.Areas.User.Models;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
 
-namespace Asp_8.TagHelpers;
+namespace BookStore.WebUI.TagHelpers;
 
 [HtmlTargetElement("books")]
 public class BooksTagHelper : TagHelper
@@ -43,7 +43,7 @@ public class BooksTagHelper : TagHelper
                         ScreeResultUser(sb, item);
                 }
             }
-            
+
             output.PreContent.SetHtmlContent(sb.ToString());
         }
     }

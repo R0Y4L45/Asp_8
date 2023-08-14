@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Asp_8.Areas.User.Models;
+namespace BookStore.WebUI.Areas.User.Models;
 
 public class BookViewModel
 {
