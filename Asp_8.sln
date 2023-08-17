@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Core", "App.Core\App.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Entities", "App.Entities\App.Entities.csproj", "{CCD643BD-0A13-4F9A-A872-38B87FCCC77B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.DataAccess", "App.DataAccess\App.DataAccess.csproj", "{171330B1-B4B3-43D2-972A-715CB94458B0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Business", "App.Bussiness\App.Business.csproj", "{0FC0E3DF-C524-409B-99ED-C36D430EDFA0}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{CCD643BD-0A13-4F9A-A872-38B87FCCC77B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCD643BD-0A13-4F9A-A872-38B87FCCC77B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCD643BD-0A13-4F9A-A872-38B87FCCC77B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{171330B1-B4B3-43D2-972A-715CB94458B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{171330B1-B4B3-43D2-972A-715CB94458B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{171330B1-B4B3-43D2-972A-715CB94458B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{171330B1-B4B3-43D2-972A-715CB94458B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FC0E3DF-C524-409B-99ED-C36D430EDFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0FC0E3DF-C524-409B-99ED-C36D430EDFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FC0E3DF-C524-409B-99ED-C36D430EDFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
