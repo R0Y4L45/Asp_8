@@ -55,7 +55,7 @@ public class BooksService : IBooksService
         if (b.Description != entity.Description)
         {
             b.Description = entity.Description;
-            flag = false;
+            flag = true;
         }
 
         if(flag)

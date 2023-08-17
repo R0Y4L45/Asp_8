@@ -210,23 +210,23 @@ public class AdminBookStoreController : Controller
     {
         if (ModelState.IsValid)
         {
-            bool flag = false;
+            List<bool> flags = new();
             Books book = _b!.Get(b => b.Id == bvm.BookId);
 
-            flag = _t!.Update(new Theme { Id = book.ThemeId, Name = bvm.Theme });
-            flag = _c!.Update(new Category { Id = book.CategoryId, Name = bvm.Category });
-            flag = _p!.Update(new Press { Id = book.PressId, Name = bvm.Press });
-            flag = _a!.Update(new Author { Id = book.AuthorId, Name = bvm.AuthorName, Surname = bvm.AuthorSurname });
-            flag = _b!.Update(new Books { Id = bvm.BookId, Name = bvm.Name, Count = bvm.Count, Price = bvm.Price });
+            flags.Add(_t!.Update(new Theme { Id = book.ThemeId, Name = bvm.Theme }));
+            flags.Add(_c!.Update(new Category { Id = book.CategoryId, Name = bvm.Category }));
+            flags.Add(_p!.Update(new Press { Id = book.PressId, Name = bvm.Press }));
+            flags.Add(_a!.Update(new Author { Id = book.AuthorId, Name = bvm.AuthorName, Surname = bvm.AuthorSurname }));
+            flags.Add(_b!.Update(new Books { Id = bvm.BookId, Name = bvm.Name, Count = bvm.Count, Price = bvm.Price }));
 
             if (!TempData.Keys.Contains("N"))
             {
-                if (flag) TempData.Add("N", $"Book => {bvm.Name} has been changed..)");
+                if (flags.Contains(true)) TempData.Add("N", $"Book => {bvm.Name} has been changed..)");
                 else TempData.Add("N", $"Book => {bvm.Name} has not been changed..(");
             }
             else
             {
-                if (flag) TempData["N"] = $"Book => {bvm.Name} has been changed..)";
+                if (flags.Contains(true)) TempData["N"] = $"Book => {bvm.Name} has been changed..)";
                 else TempData["N"] = $"Book => {bvm.Name} has not been changed..(";
             }
 
