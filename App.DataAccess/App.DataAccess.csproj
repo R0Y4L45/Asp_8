@@ -7,8 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contrete\" />
-    <Folder Include="Abstract\" />
+    <Compile Remove="Abstract\**" />
+    <Compile Remove="Concrete\**" />
+    <EmbeddedResource Remove="Abstract\**" />
+    <EmbeddedResource Remove="Concrete\**" />
+    <None Remove="Abstract\**" />
+    <None Remove="Concrete\**" />
   </ItemGroup>
 
 </Project>

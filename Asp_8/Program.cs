@@ -1,5 +1,6 @@
-using Asp_8.Context;
-using Microsoft.AspNetCore.Builder;
+using App.Business.Abstract;
+using App.Business.Concrete;
+using Asp_8.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.WebUI;
@@ -12,8 +13,15 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+
         string conn = builder.Configuration.GetConnectionString("default");
         builder.Services.AddDbContext<BookStoreDbContext>(x => x.UseSqlServer(conn));
+
+        builder.Services.AddSingleton<ICategoryService, CategoryService>();
+        builder.Services.AddSingleton<IBooksService, BooksService>();
+        builder.Services.AddSingleton<IAuthorService, AuthorService>();
+        builder.Services.AddSingleton<IThemeService, ThemeService>();
+        builder.Services.AddSingleton<IPressService, PressService>();
 
         var app = builder.Build();
 

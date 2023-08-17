@@ -4,7 +4,7 @@ namespace Asp_8.Entites;
 
 public class BaseEntity
 {
-    [Key]
+    [Required]
     public int Id { get; set; }
     public string Name { get; set; } = null!;
 }

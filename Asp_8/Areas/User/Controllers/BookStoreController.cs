@@ -1,28 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Asp_8.Context;
 using BookStore.WebUI.Areas.User.Models;
+using App.Business.Abstract;
 
 namespace BookStore.WebUI.Areas.User.Controllers;
 
 [Area("User")]
 public class BookStoreController : Controller
 {
-    private readonly BookStoreDbContext _bookStoreDbContext;
-    public BookStoreController(BookStoreDbContext bookStoreDbContext)
+    private readonly ICategoryService? _c;
+    private readonly IAuthorService? _a;
+    private readonly IPressService? _p;
+    private readonly IBooksService? _b;
+    private readonly IThemeService? _t;
+
+    public BookStoreController(ICategoryService? c, IAuthorService? a, IPressService? p, IBooksService? b, IThemeService? t)
     {
-        _bookStoreDbContext = bookStoreDbContext;
-
-
+        _c = c;
+        _a = a;
+        _p = p;
+        _b = b;
+        _t = t;
     }
 
     public IActionResult Main()
     {
-        IQueryable<BookViewModel> bvm;
-        bvm = (from b in _bookStoreDbContext.Books
-               join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
-               join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
-               join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
-               join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
+        IEnumerable<BookViewModel> booksList;
+        booksList = (from b in _b?.GetList()
+               join c in _c?.GetList()! on b.CategoryId equals c.Id
+               join p in _p?.GetList()! on b.PressId equals p.Id
+               join t in _t?.GetList()! on b.ThemeId equals t.Id
+               join a in _a?.GetList()! on b.AuthorId equals a.Id
                select new BookViewModel
                {
                    BookId = b.Id,
@@ -37,6 +44,6 @@ public class BookStoreController : Controller
                    Press = p.Name
                });
 
-        return View("Main", bvm);
+        return View(booksList);
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using App.Core.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Asp_8.Entites;
 
-public class Books : BaseEntity
+public class Books : BaseEntity, IEntity
 {
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Price { get; set; }

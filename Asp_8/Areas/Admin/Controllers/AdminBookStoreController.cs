@@ -1,4 +1,4 @@
-﻿using Asp_8.Context;
+﻿using App.Business.Abstract;
 using Asp_8.Entites;
 using BookStore.WebUI.Areas.User.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,74 +9,82 @@ namespace BookStore.WebUI.Areas.Admin.Controllers;
 public class AdminBookStoreController : Controller
 {
     private bool _flag = false;
-    private readonly BookStoreDbContext _bookStoreDbContext;
-    public AdminBookStoreController(BookStoreDbContext bookStoreDbContext)
+    private readonly ICategoryService? _c;
+    private readonly IAuthorService? _a;
+    private readonly IPressService? _p;
+    private readonly IBooksService? _b;
+    private readonly IThemeService? _t;
+
+    public AdminBookStoreController(ICategoryService? c, IAuthorService? a, IPressService? p, IBooksService? b, IThemeService? t)
     {
-        _bookStoreDbContext = bookStoreDbContext;
+        _c = c;
+        _a = a;
+        _p = p;
+        _b = b;
+        _t = t;
 
-        //_bookStoreDbContext.Add(new Category { Name = "SQL Language" });
-        //_bookStoreDbContext.Add(new Category { Name = "C++ Builder" });
-        //_bookStoreDbContext.Add(new Category { Name = "Delphi" });
-        //_bookStoreDbContext.Add(new Category { Name = "Visual Basic" });
-        //_bookStoreDbContext.Add(new Category { Name = "3D Studio Max" });
-        //_bookStoreDbContext.Add(new Category { Name = "Mathcad" });
-        //_bookStoreDbContext.Add(new Category { Name = "Novel" });
-        //_bookStoreDbContext.Add(new Category { Name = "Mathematical Analysis" });
+        //_c?.Add(new Category { Name = "SQL Language" });
+        //_c?.Add(new Category { Name = "C++ Builder" });
+        //_c?.Add(new Category { Name = "Delphi" });
+        //_c?.Add(new Category { Name = "Visual Basic" });
+        //_c?.Add(new Category { Name = "3D Studio Max" });
+        //_c?.Add(new Category { Name = "Mathcad" });
+        //_c?.Add(new Category { Name = "Novel" });
+        //_c?.Add(new Category { Name = "Mathematical Analysis" });
 
-        //_bookStoreDbContext.Add(new Theme { Name = "Bases of data" });
-        //_bookStoreDbContext.Add(new Theme { Name = "Graphic Packages" });
-        //_bookStoreDbContext.Add(new Theme { Name = "High Mathematics" });
-        //_bookStoreDbContext.Add(new Theme { Name = "Networks" });
-        //_bookStoreDbContext.Add(new Theme { Name = "Web - design" });
-        //_bookStoreDbContext.Add(new Theme { Name = "Windows 2000" });
-        //_bookStoreDbContext.Add(new Theme { Name = "Operating systems" });
+        //_t?.Add(new Theme { Name = "Bases of data" });
+        //_t?.Add(new Theme { Name = "Graphic Packages" });
+        //_t?.Add(new Theme { Name = "High Mathematics" });
+        //_t?.Add(new Theme { Name = "Networks" });
+        //_t?.Add(new Theme { Name = "Web - design" });
+        //_t?.Add(new Theme { Name = "Windows 2000" });
+        //_t?.Add(new Theme { Name = "Operating systems" });
 
-        //_bookStoreDbContext.Add(new Press { Name = "DiaSoft" });
-        //_bookStoreDbContext.Add(new Press { Name = "BHV" });
-        //_bookStoreDbContext.Add(new Press { Name = "Dialectics" });
-        //_bookStoreDbContext.Add(new Press { Name = "Kudits - Image" });
-        //_bookStoreDbContext.Add(new Press { Name = "Nauka" });
-        //_bookStoreDbContext.Add(new Press { Name = "Binom" });
+        //_p?.Add(new Press { Name = "DiaSoft" });
+        //_p?.Add(new Press { Name = "BHV" });
+        //_p?.Add(new Press { Name = "Dialectics" });
+        //_p?.Add(new Press { Name = "Kudits - Image" });
+        //_p?.Add(new Press { Name = "Nauka" });
+        //_p?.Add(new Press { Name = "Binom" });
 
-        //_bookStoreDbContext.Add(new Author { Name = "James", Surname = "Groff" });
-        //_bookStoreDbContext.Add(new Author { Name = "Michael", Surname = "Marows" });
-        //_bookStoreDbContext.Add(new Author { Name = "Boris", Surname = "Carpov" });
-        //_bookStoreDbContext.Add(new Author { Name = "Vladimir", Surname = "Korol" });
-        //_bookStoreDbContext.Add(new Author { Name = "Kevin", Surname = "Reichard" });
-        //_bookStoreDbContext.Add(new Author { Name = "Olga", Surname = "Kokoreva" });
+        //_a?.Add(new Author { Name = "James", Surname = "Groff" });
+        //_a?.Add(new Author { Name = "Michael", Surname = "Marows" });
+        //_a?.Add(new Author { Name = "Boris", Surname = "Carpov" });
+        //_a?.Add(new Author { Name = "Vladimir", Surname = "Korol" });
+        //_a?.Add(new Author { Name = "Kevin", Surname = "Reichard" });
+        //_a?.Add(new Author { Name = "Olga", Surname = "Kokoreva" });
 
-        //_bookStoreDbContext.Add(new Books { Name = "SQL", Count = 12, PressId = 1, ThemeId = 1, Description = "BestSeller", Price = 3.2M, CategoryId = 1, AuthorId = 1 });
-        //_bookStoreDbContext.Add(new Books { Name = "3D Studio Max 3", Count = 22, PressId = 2, ThemeId = 2, Description = "Sold", Price = 2.2M, CategoryId = 2, AuthorId = 2 });
-        //_bookStoreDbContext.Add(new Books { Name = "Visual Basic 6", Count = 15, PressId = 3, ThemeId = 1, Description = "BestSeller", Price = 1.8M, CategoryId = 5, AuthorId = 3 });
-        //_bookStoreDbContext.Add(new Books { Name = @"C++ Builder", Count = 14, PressId = 4, ThemeId = 4, Description = "BestSeller", Price = 3.3M, CategoryId = 4, AuthorId = 4 });
-        //_bookStoreDbContext.Add(new Books { Name = "Mathcad", Count = 21, PressId = 5, ThemeId = 3, Description = "BestSeller", Price = 4.2M, CategoryId = 3, AuthorId = 5 });
-        //_bookStoreDbContext.Add(new Books { Name = "Delphi helper", Count = 10, PressId = 3, ThemeId = 5, Description = "BestSeller", Price = 3.6M, CategoryId = 6, AuthorId = 6 });
-
-        //_bookStoreDbContext.SaveChanges();
+        //_b?.Add(new Books { Name = "SQL", Count = 12, PressId = 1, ThemeId = 1, Description = "BestSeller", Price = 3.2M, CategoryId = 1, AuthorId = 1 });
+        //_b?.Add(new Books { Name = "3D Studio Max 3", Count = 22, PressId = 2, ThemeId = 2, Description = "Sold", Price = 2.2M, CategoryId = 2, AuthorId = 2 });
+        //_b?.Add(new Books { Name = "Visual Basic 6", Count = 15, PressId = 3, ThemeId = 1, Description = "BestSeller", Price = 1.8M, CategoryId = 5, AuthorId = 3 });
+        //_b?.Add(new Books { Name = @"C++ Builder", Count = 14, PressId = 4, ThemeId = 4, Description = "BestSeller", Price = 3.3M, CategoryId = 4, AuthorId = 4 });
+        //_b?.Add(new Books { Name = "Mathcad", Count = 21, PressId = 5, ThemeId = 3, Description = "BestSeller", Price = 4.2M, CategoryId = 3, AuthorId = 5 });
+        //_b?.Add(new Books { Name = "Delphi helper", Count = 10, PressId = 3, ThemeId = 5, Description = "BestSeller", Price = 3.6M, CategoryId = 6, AuthorId = 6 });
     }
 
     public IActionResult Main()
     {
-        IQueryable<BookViewModel> bvm = from b in _bookStoreDbContext.Books
-                                        join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
-                                        join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
-                                        join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
-                                        join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
-                                        select new BookViewModel
-                                        {
-                                            BookId = b.Id,
-                                            Name = b.Name,
-                                            Price = b.Price,
-                                            Count = b.Count,
-                                            Description = b.Description,
-                                            Category = c.Name,
-                                            AuthorName = a.Name,
-                                            AuthorSurname = a.Surname,
-                                            Theme = t.Name,
-                                            Press = p.Name
-                                        };
+        IEnumerable<BookViewModel> booksList;
+        booksList = (from b in _b?.GetList()
+                     join c in _c?.GetList()! on b.CategoryId equals c.Id
+                     join p in _p?.GetList()! on b.PressId equals p.Id
+                     join t in _t?.GetList()! on b.ThemeId equals t.Id
+                     join a in _a?.GetList()! on b.AuthorId equals a.Id
+                     select new BookViewModel
+                     {
+                         BookId = b.Id,
+                         Name = b.Name,
+                         Price = b.Price,
+                         Count = b.Count,
+                         Description = b.Description,
+                         Category = c.Name,
+                         AuthorName = a.Name,
+                         AuthorSurname = a.Surname,
+                         Theme = t.Name,
+                         Press = p.Name
+                     });
 
-        return View(bvm);
+        return View(booksList);
     }
 
     public IActionResult Add() => View(new BookViewModel());
@@ -86,37 +94,45 @@ public class AdminBookStoreController : Controller
     {
         if (ModelState.IsValid)
         {
-            int aId = _bookStoreDbContext.Authors!.Where(aut => aut.Name == bvm.AuthorName && aut.Surname == bvm.AuthorSurname).Select(aut => aut.Id).FirstOrDefault();
-            int cId = _bookStoreDbContext.Categories!.Where(c => c.Name == bvm.Category).Select(c => c.Id).FirstOrDefault();
-            int tId = _bookStoreDbContext.Themes!.Where(t => t.Name == bvm.Theme).Select(t => t.Id).FirstOrDefault();
-            int pId = _bookStoreDbContext.Presses!.Where(aut => aut.Name == bvm.Press).Select(p => p.Id).FirstOrDefault();
+            int aId, cId, tId, pId;
 
-            if (aId == 0)
+            if (_a!.Get(a => a.Name == bvm.AuthorName && a.Surname == bvm.AuthorSurname) is Author a)
+                aId = a.Id;
+            else
             {
-                _bookStoreDbContext.Authors?.Add(new Author { Name = bvm.AuthorName, Surname = bvm.AuthorSurname });
-                aId = _bookStoreDbContext.Authors!.Count() + 1;
-            }
-            if (cId == 0)
-            {
-                _bookStoreDbContext.Categories?.Add(new Category { Name = bvm.Category });
-                cId = _bookStoreDbContext.Categories!.Count() + 1;
-            }
-            if (tId == 0)
-            {
-                _bookStoreDbContext.Themes?.Add(new Theme { Name = bvm.Theme });
-                tId = _bookStoreDbContext.Themes!.Count() + 1;
-            }
-            if (pId == 0)
-            {
-                _bookStoreDbContext.Presses?.Add(new Press { Name = bvm.Press });
-                pId = _bookStoreDbContext.Presses!.Count() + 1;
+                _a.Add(new Author { Name = bvm.AuthorName, Surname = bvm.AuthorSurname });
+                aId = _a.Get(a => a.Name == bvm.AuthorName && a.Surname == bvm.AuthorSurname).Id;
             }
 
-            _bookStoreDbContext.SaveChanges();
-
-            if (_bookStoreDbContext.Books!.Where(b => b.Name == bvm.Name && b.PressId == pId && b.CategoryId == cId && b.AuthorId == aId).FirstOrDefault() == null)
+            if (_c!.Get(c => c.Name == bvm.Category) is Category c)
+                cId = c.Id;
+            else
             {
-                _bookStoreDbContext.Books?.Add(new Books
+                _c.Add(new Category { Name = bvm.Category });
+                cId = _c.Get(c => c.Name == bvm.Category).Id;
+            }
+
+            if (_t!.Get(t => t.Name == bvm.Theme) is Theme t)
+                tId = t.Id;
+            else
+            {
+                _t.Add(new Theme { Name = bvm.Theme });
+                tId = _t.Get(t => t.Name == bvm.Theme).Id;
+            }
+
+            if (_p!.Get(p => p.Name == bvm.Press) is Press p)
+                pId = p.Id;
+            else
+            {
+                _p.Add(new Press { Name = bvm.Press });
+                pId = _p.Get(p => p.Name == bvm.Press).Id;
+            }
+
+            if (_b!.Get(b => b.Name == bvm.Name) is Books b && b.PressId == pId && b.ThemeId == tId && b.AuthorId == aId && b.CategoryId == cId)
+                _flag = false;
+            else
+            {
+                _b.Add(new Books
                 {
                     Name = bvm.Name,
                     Price = bvm.Price,
@@ -130,7 +146,6 @@ public class AdminBookStoreController : Controller
 
                 _flag = true;
             }
-            _bookStoreDbContext.SaveChanges();
 
             if (_flag) TempData["N"] = $"Book : {bvm.Name} added ;-)";
             else TempData["N"] = $"Book : {bvm.Name} has been added by YOU ;-)";
@@ -142,25 +157,36 @@ public class AdminBookStoreController : Controller
 
     public IActionResult Delete(int id)
     {
-        Books? book = _bookStoreDbContext.Books?.Where(x => x.Id == id).First();
-        _bookStoreDbContext.Books!.Remove(book!);
-        _bookStoreDbContext.SaveChanges();
+        List<Books> books = _b!.GetList();
+        Books? book = _b!.Get(b => b.Id == id);
+
+        _b.Delete(book);
+        var d = books.Count(b => b.AuthorId == book.AuthorId);
+
+        if (books.Count(b => b.AuthorId == book.AuthorId) == 1)
+            _a!.Delete(_a.Get(a => a.Id == book.AuthorId));
+        if (books.Count(b => b.ThemeId == book.ThemeId) == 1)
+            _t!.Delete(_t.Get(t => t.Id == book.ThemeId));
+        if (books.Count(b => b.PressId == book.PressId) == 1)
+            _p!.Delete(_p.Get(p => p.Id == book.PressId));
+        if (books.Count(b => b.CategoryId == book.CategoryId) == 1)
+            _c!.Delete(_c.Get(c => c.Id == book.CategoryId));
 
         if (!TempData.Keys.Contains("N"))
-            TempData.Add("N", $"Book : {book?.Name} was deleted by YOU ;-(");
+            TempData.Add("N", $"Book : {book?.Name} was deleted ;-(");
         else
-            TempData["N"] = $"Book : {book?.Name} was deleted by YOU ;-(";
+            TempData["N"] = $"Book : {book?.Name} was deleted ;-(";
 
         return RedirectToAction("Main");
     }
 
-    public IActionResult Edit(int id = 0)
+    public IActionResult Edit(int id)
     {
-        var bvm = (from b in _bookStoreDbContext.Books
-                   join c in _bookStoreDbContext.Categories! on b.CategoryId equals c.Id
-                   join p in _bookStoreDbContext.Presses! on b.PressId equals p.Id
-                   join t in _bookStoreDbContext.Themes! on b.ThemeId equals t.Id
-                   join a in _bookStoreDbContext.Authors! on b.AuthorId equals a.Id
+        var bvm = (from b in _b!.GetList()
+                   join c in _c!.GetList()! on b.CategoryId equals c.Id
+                   join p in _p!.GetList()! on b.PressId equals p.Id
+                   join t in _t!.GetList()! on b.ThemeId equals t.Id
+                   join a in _a!.GetList()! on b.AuthorId equals a.Id
                    where b.Id == id
                    select new BookViewModel
                    {
@@ -184,27 +210,25 @@ public class AdminBookStoreController : Controller
     {
         if (ModelState.IsValid)
         {
-            Books? b = _bookStoreDbContext.Books?.First(b => b.Id == bvm.BookId);
-            Category? c = _bookStoreDbContext.Categories?.First(c => c.Id == b!.CategoryId);
-            Press? p = _bookStoreDbContext.Presses?.First(p => p.Id == b!.PressId);
-            Theme? t = _bookStoreDbContext.Themes?.First(t => t.Id == b!.ThemeId);
-            Author? a = _bookStoreDbContext.Authors?.First(a => a.Id == b!.AuthorId);
-            b!.Name = bvm.Name;
-            b.Price = bvm.Price;
-            b.Count = bvm.Count;
-            b.Description = bvm.Description;
-            c!.Name = bvm.Category;
-            p!.Name = bvm.Press;
-            t!.Name = bvm.Theme;
-            a!.Name = bvm.AuthorName;
-            a.Surname = bvm.AuthorSurname;
+            bool flag = false;
+            Books book = _b!.Get(b => b.Id == bvm.BookId);
 
-            _bookStoreDbContext.SaveChanges();
+            flag = _t!.Update(new Theme { Id = book.ThemeId, Name = bvm.Theme });
+            flag = _c!.Update(new Category { Id = book.CategoryId, Name = bvm.Category });
+            flag = _p!.Update(new Press { Id = book.PressId, Name = bvm.Press });
+            flag = _a!.Update(new Author { Id = book.AuthorId, Name = bvm.AuthorName, Surname = bvm.AuthorSurname });
+            flag = _b!.Update(new Books { Id = bvm.BookId, Name = bvm.Name, Count = bvm.Count, Price = bvm.Price });
 
             if (!TempData.Keys.Contains("N"))
-                TempData.Add("N", $"Book => {bvm.Name} has been changed..)");
+            {
+                if (flag) TempData.Add("N", $"Book => {bvm.Name} has been changed..)");
+                else TempData.Add("N", $"Book => {bvm.Name} has not been changed..(");
+            }
             else
-                TempData["N"] = $"Book => {bvm.Name} has been changed..)";
+            {
+                if (flag) TempData["N"] = $"Book => {bvm.Name} has been changed..)";
+                else TempData["N"] = $"Book => {bvm.Name} has not been changed..(";
+            }
 
             return RedirectToAction("Main");
         }

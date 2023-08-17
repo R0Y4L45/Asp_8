@@ -1,6 +1,8 @@
-﻿namespace Asp_8.Entites;
+﻿using App.Core.Abstract;
 
-public class Category : BaseEntity
+namespace Asp_8.Entites;
+
+public class Category : BaseEntity, IEntity
 {
     public List<Books>? Books { get; set;}
 }

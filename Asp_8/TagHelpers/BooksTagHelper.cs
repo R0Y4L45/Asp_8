@@ -9,7 +9,7 @@ public class BooksTagHelper : TagHelper
 {
     private const string itemsAttribute = "Items";
     [HtmlAttributeName(itemsAttribute)]
-    public IQueryable<BookViewModel>? Items { get; set; }
+    public IEnumerable<BookViewModel>? Items { get; set; }
 
     private const string IdAttribute = "Id";
     [HtmlAttributeName(IdAttribute)]

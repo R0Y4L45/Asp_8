@@ -1,13 +1,17 @@
 ﻿using App.Core.Abstract;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace App.Core.DataAccess;
 
-public interface IEntityRepository<T> where T : class, IEntity, new()
+public interface IEntityRepository<TEntity, TContext> 
+    where TEntity : class, IEntity, new()
+    where TContext : DbContext
 {
-    T Get(Expression<Func<T, bool>> filter = null!);
-    List<T> GetList(Expression<Func<T, bool>> filter = null!);
-    void Add(T entity);
-    void Delete(T entity);
-    void Update(T entity);
+    TContext Context { get; }
+    TEntity Get(Expression<Func<TEntity, bool>> filter = null!);
+    List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null!);
+    void Add(TEntity entity);
+    void Delete(TEntity entity);
+    bool Update(TEntity entity);
 }

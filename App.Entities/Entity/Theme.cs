@@ -1,6 +1,8 @@
-﻿namespace Asp_8.Entites;
+﻿using App.Core.Abstract;
 
-public class Theme : BaseEntity
+namespace Asp_8.Entites;
+
+public class Theme : BaseEntity, IEntity
 {
     public List<Books>? Books { get; set; }
 }

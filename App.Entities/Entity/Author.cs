@@ -1,10 +1,9 @@
-﻿namespace Asp_8.Entites;
+﻿using App.Core.Abstract;
 
-public class Author : BaseEntity
+namespace Asp_8.Entites;
+
+public class Author : BaseEntity, IEntity
 {
     public string Surname { get; set; } = null!;
-    
-    //Navigation_Prop
     public List<Books>? Book { get; set; }
-
 }
