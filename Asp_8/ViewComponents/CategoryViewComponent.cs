@@ -14,5 +14,10 @@ public class CategoryViewComponent : ViewComponent
         _categoryService = categoryService;
     }
 
-    public ViewViewComponentResult Invoke() => View(new CategoryViewModel { Categories = _categoryService.GetList() });
+    public ViewViewComponentResult Invoke() =>
+        View(new CategoryViewModel
+        {
+            Categories = _categoryService.GetList(),
+            CurrentCategory = Convert.ToInt32(HttpContext.Request.Query["category"])
+        });
 }

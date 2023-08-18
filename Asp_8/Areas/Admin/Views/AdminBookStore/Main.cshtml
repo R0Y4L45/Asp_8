@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookViewModel>
+﻿@model BooksListViewModel
 
 <div class="container-fluid">
     <div class="text-center">
@@ -29,7 +29,7 @@
         </div>
         <div class="col-12 col-md-9">
             <div class="table-responsive">
-                <table class="min-vh-30 table table-striped table-dark table-hover">
+                <table style="min-height: 450px;" class="min-vh-30 table table-striped table-dark table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th class="text-center" scope="col">Id</th>
@@ -44,8 +44,9 @@
                             <th class="text-center" scope="col" style="width: 200px;">Action</th>
                         </tr>
                     </thead>
-                    <books Area=true Items="@Model"></books>
+                    <books Area=true Items="@Model.Books"></books>
                 </table>
+                <books-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage" role="@Model.Role" current-category="@Model.CurrentCategory"></books-pager>
             </div>
         </div>
     </div>

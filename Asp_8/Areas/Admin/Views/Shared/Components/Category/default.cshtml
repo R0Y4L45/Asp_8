@@ -1,10 +1,17 @@
 ﻿@model CategoryViewModel
 
 <ul class="list-group">
-    <li class="bg-dark text-white list-group-item text-center" asp><strong>Categories</strong></li>
+    <li class="bg-dark text-white list-group-item text-center"><strong>Categories</strong></li>
     @foreach (var item in Model.Categories!)
     {
-        <asp:Button></asp:Button>
-        <li class="list-group-item text-center list-group-item-action">@item.Name</li>
+        var css = "list-group-item";
+        @if (item.Id == Model.CurrentCategory)
+        {
+            css += " active";
+        }
+
+        <li>
+            <a style="display:block;cursor:pointer;" class="@css text-center list-group-item-action" href="/admin?category=@item.Id">@item.Name</a>
+        </li>
     }
 </ul>

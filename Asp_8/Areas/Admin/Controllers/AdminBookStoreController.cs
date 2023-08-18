@@ -62,11 +62,13 @@ public class AdminBookStoreController : Controller
         //_b?.Add(new Books { Name = "Delphi helper", Count = 10, PressId = 3, ThemeId = 5, Description = "BestSeller", Price = 3.6M, CategoryId = 6, AuthorId = 6 });
     }
 
-    public IActionResult Main()
+    public IActionResult Main(int page = 1, int category = 0)
     {
+        int pageSize = 10;
+
         IEnumerable<BookViewModel> booksList;
         booksList = (from b in _b?.GetList()
-                     join c in _c?.GetList()! on b.CategoryId equals c.Id
+                     join c in category > 0 ? _c?.GetList(c => c.Id == category)! : _c?.GetList()! on b.CategoryId equals c.Id
                      join p in _p?.GetList()! on b.PressId equals p.Id
                      join t in _t?.GetList()! on b.ThemeId equals t.Id
                      join a in _a?.GetList()! on b.AuthorId equals a.Id
@@ -84,7 +86,17 @@ public class AdminBookStoreController : Controller
                          Press = p.Name
                      });
 
-        return View(booksList);
+        BooksListViewModel model = new BooksListViewModel
+        {
+            Books = booksList.Skip((page - 1) * pageSize).Take(pageSize).ToList(),
+            PageCount = (int)Math.Ceiling(booksList.Count() / (double)pageSize),
+            PageSize = pageSize,
+            CurrentPage = page,
+            Role = true,
+            CurrentCategory = category
+        };
+
+        return View(model);
     }
 
     public IActionResult Add() => View(new BookViewModel());
