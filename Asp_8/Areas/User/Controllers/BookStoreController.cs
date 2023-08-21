@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BookStore.WebUI.Areas.User.Models;
 using App.Business.Abstract;
+using BookStore.WebUI.Services;
 using Asp_8.Entites;
-using Microsoft.Extensions.Primitives;
-using System.Web;
+using App.Entities.Entity;
+using App.Business.Concrete;
 
 namespace BookStore.WebUI.Areas.User.Controllers;
 
@@ -15,14 +16,18 @@ public class BookStoreController : Controller
     private readonly IPressService? _p;
     private readonly IBooksService? _b;
     private readonly IThemeService? _t;
+    private readonly ICartSessionService? _cart;
+    private readonly ICartService? _cartService;
 
-    public BookStoreController(ICategoryService? c, IAuthorService? a, IPressService? p, IBooksService? b, IThemeService? t)
+    public BookStoreController(ICategoryService? c, IAuthorService? a, IPressService? p, IBooksService? b, IThemeService? t, ICartSessionService? cart, ICartService? cartService)
     {
         _c = c;
         _a = a;
         _p = p;
         _b = b;
         _t = t;
+        _cart = cart;
+        _cartService = cartService;
     }
 
     public IActionResult Main(int page = 1, int category = 0)
@@ -64,8 +69,19 @@ public class BookStoreController : Controller
         return View(model);
     }
 
-    public string Buy()
+    public IActionResult Buy(int Id)
     {
-        return "Yes";
+        Books? b = _b?.Get(b => b.Id == Id);
+        Cart? c = _cart?.GetCart();
+
+        _cartService?.AddToCart(c!, b!);
+        _cart?.SetCart(c!);
+
+        if(TempData.Keys.Contains("message"))
+            TempData["message"] = $"Your product, {b?.Name} was added successfully to cart!";
+        else
+            TempData.Add("message", $"Your product, {b?.Name} was added successfully to cart!");
+
+        return RedirectToAction("Main");
     }
 }
