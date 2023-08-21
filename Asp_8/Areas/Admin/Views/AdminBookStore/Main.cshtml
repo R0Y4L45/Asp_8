@@ -2,20 +2,20 @@
 
 <div class="container-fluid">
     <div class="text-center">
-        <h1 style="background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); min-height: 60px" >Admin page</h1>
+        <h1 style="background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); min-height: 60px">Admin page</h1>
     </div>
 
     @if (TempData["N"] != null && TempData["N"]?.ToString() != string.Empty)
     {
         if (TempData["N"]?.ToString()?.Last() == ')')
         {
-            <div class="alert alert-success">
+            <div class="alert alert-success animate__animated animate__bounceInLeft" role="alert">
                 <strong>Success!</strong> @TempData["N"]?.ToString()
             </div>
         }
         else if (TempData["N"]?.ToString()?.Last() == '(')
         {
-            <div class="alert alert-danger">
+            <div class="alert alert-danger animate__animated animate__bounceInLeft" role="alert">
                 <strong>Success!</strong> @TempData["N"]?.ToString()
             </div>
         }
@@ -30,23 +30,9 @@
         <div class="col-12 col-md-9">
             <div class="table-responsive">
                 <table style="min-height: 450px;" class="min-vh-30 table table-striped table-dark table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th class="text-center" scope="col">Id</th>
-                            <th class="text-center" scope="col">Name</th>
-                            <th class="text-center" scope="col">Category</th>
-                            <th class="text-center" scope="col">Theme</th>
-                            <th class="text-center" scope="col">Author</th>
-                            <th class="text-center" scope="col">Press</th>
-                            <th class="text-center" scope="col">Price</th>
-                            <th class="text-center" scope="col">Count</th>
-                            <th class="text-center" scope="col">Description</th>
-                            <th class="text-center" scope="col" style="width: 200px;">Action</th>
-                        </tr>
-                    </thead>
-                    <books Area=true Items="@Model.Books"></books>
+                    <books Area=true Items="@Model.Books" IdItem=12></books>
                 </table>
-                <books-pager page-count="@Model.PageCount" page-size="@Model.PageSize" current-page="@Model.CurrentPage" role="@Model.Role" current-category="@Model.CurrentCategory"></books-pager>
+                <books-pager page-count="@Model.PageCount" current-page="@Model.CurrentPage" role="@Model.Role" current-category="@Model.CurrentCategory"></books-pager>
             </div>
         </div>
     </div>

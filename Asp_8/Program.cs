@@ -1,6 +1,7 @@
 using App.Business.Abstract;
 using App.Business.Concrete;
 using Asp_8.DataBaseContext;
+using BookStore.WebUI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.WebUI;
@@ -16,7 +17,11 @@ public class Program
 
         string conn = builder.Configuration.GetConnectionString("default");
         builder.Services.AddDbContext<BookStoreDbContext>(x => x.UseSqlServer(conn));
+        builder.Services.AddSession();
 
+        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
+        builder.Services.AddSingleton<ICartService, CartService>();
         builder.Services.AddSingleton<ICategoryService, CategoryService>();
         builder.Services.AddSingleton<IBooksService, BooksService>();
         builder.Services.AddSingleton<IAuthorService, AuthorService>();
@@ -33,7 +38,7 @@ public class Program
             app.UseHsts();
         }
 
-
+        app.UseSession();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
 
 namespace BookStore.WebUI.TagHelpers
@@ -7,8 +6,6 @@ namespace BookStore.WebUI.TagHelpers
     [HtmlTargetElement("books-pager")]
     public class PagingTagHelper : TagHelper
     {
-        [HtmlAttributeName("page-size")]
-        public int PageSize { get; set; }
         [HtmlAttributeName("page-count")]
         public int PageCount { get; set; }
         [HtmlAttributeName("current-category")]
