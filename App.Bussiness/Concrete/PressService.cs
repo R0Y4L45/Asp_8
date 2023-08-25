@@ -27,7 +27,7 @@ public class PressService : IPressService
     }
 
     public Press Get(Expression<Func<Press, bool>> filter = null!) => Context.Set<Press>().FirstOrDefault(filter)!;
-    public List<Press> GetList(Expression<Func<Press, bool>> filter = null!) =>
+    public IEnumerable<Press> GetList(Expression<Func<Press, bool>> filter = null!) =>
         filter == null ? Context.Set<Press>().ToList() : Context.Set<Press>().Where(filter).ToList();
     public bool Update(Press entity)
     {

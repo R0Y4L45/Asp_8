@@ -27,8 +27,8 @@ public class CategoryService : ICategoryService
     }
 
     public Category Get(Expression<Func<Category, bool>> filter = null!) => Context.Set<Category>().FirstOrDefault(filter)!;
-    public List<Category> GetList(Expression<Func<Category, bool>> filter = null!) =>
-        filter == null ? Context.Set<Category>().ToList() : Context.Set<Category>().Where(filter).ToList();
+    public IEnumerable<Category> GetList(Expression<Func<Category, bool>> filter = null!) =>
+        filter == null ? Context.Set<Category>() : Context.Set<Category>().Where(filter);
     public bool Update(Category entity)
     {
         if (Context.Categories?.FirstOrDefault(c => c.Id == entity.Id && c.Name == entity.Name) is null)

@@ -35,13 +35,14 @@ public class BookStoreController : Controller
         int pageSize = 10, categoryCount = Convert.ToInt32(_c?.Context.Categories?.Count());
 
         IEnumerable<BookViewModel> booksList;
+        IEnumerable<Category>? categoryList = _c?.GetList();
 
         BooksListViewModel model = new BooksListViewModel
         {
             Role = false
         };
 
-        model.CurrentCategory = category > categoryCount ? categoryCount : category < 0 ? 1 : category;
+        model.CurrentCategory = categoryList?.Where(c => c.Id == category).Count() > 0 ? category : category >= categoryCount ? categoryList!.Last().Id : category < 0 ? 1 : 0;
 
         booksList = (from b in _b?.GetList()
                      join c in model.CurrentCategory == 0 ? _c?.GetList()! : _c?.GetList(c => c.Id == model.CurrentCategory)! on b.CategoryId equals c.Id
@@ -63,8 +64,11 @@ public class BookStoreController : Controller
                      });
 
         model.PageCount = (int)Math.Ceiling(booksList.Count() / (double)pageSize);
-        model.CurrentPage = model.PageCount < page ? model.PageCount : page <= 0 ? 1 : page; 
+        model.CurrentPage = model.PageCount < page ? model.PageCount : page <= 0 ? 1 : page;
         model.Books = booksList.Skip((model.CurrentPage - 1) * pageSize).Take(pageSize);
+
+        StaticPageSaver.Page = model.CurrentPage;
+        StaticPageSaver.Category = model.CurrentCategory;
 
         return View(model);
     }
@@ -77,11 +81,11 @@ public class BookStoreController : Controller
         _cartService?.AddToCart(c!, b!);
         _cart?.SetCart(c!);
 
-        if(TempData.Keys.Contains("message"))
+        if (TempData.Keys.Contains("message"))
             TempData["message"] = $"Your product, {b?.Name} was added successfully to cart!";
         else
             TempData.Add("message", $"Your product, {b?.Name} was added successfully to cart!");
 
-        return RedirectToAction("Main");
+        return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
     }
 }

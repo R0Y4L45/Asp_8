@@ -27,7 +27,7 @@ public class AuthorService : IAuthorService
     }
 
     public Author Get(Expression<Func<Author, bool>> filter = null!) => Context.Set<Author>().FirstOrDefault(filter)!;
-    public List<Author> GetList(Expression<Func<Author, bool>> filter = null!) => 
+    public IEnumerable<Author> GetList(Expression<Func<Author, bool>> filter = null!) => 
         filter == null ? Context.Set<Author>().ToList() : Context.Set<Author>().Where(filter).ToList();
 
     public bool Update(Author entity)

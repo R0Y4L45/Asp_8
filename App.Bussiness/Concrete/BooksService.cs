@@ -27,7 +27,7 @@ public class BooksService : IBooksService
     }
 
     public Books Get(Expression<Func<Books, bool>> filter = null!) => Context.Set<Books>().FirstOrDefault(filter)!;
-    public List<Books> GetList(Expression<Func<Books, bool>> filter = null!) =>
+    public IEnumerable<Books> GetList(Expression<Func<Books, bool>> filter = null!) =>
         filter == null ? Context.Set<Books>().ToList() : Context.Set<Books>().Where(filter).ToList();
     public bool Update(Books entity)
     {

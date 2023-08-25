@@ -65,15 +65,16 @@ public class AdminBookStoreController : Controller
     public IActionResult Main(int page = 1, int category = 0)
     {
         int pageSize = 10, categoryCount = Convert.ToInt32(_c?.Context.Categories?.Count());
-
+        
         IEnumerable<BookViewModel> booksList;
+        IEnumerable<Category>? categoryList = _c!.GetList();
 
         BooksListViewModel model = new BooksListViewModel
         {
             Role = true
         };
 
-        model.CurrentCategory = category > categoryCount ? categoryCount : category < 0 ? 1 : category;
+        model.CurrentCategory = categoryList?.Where(c => c.Id == category).Count() > 0 ? category : category >= categoryCount ? categoryList!.Last().Id : category < 0 ? 1 : 0;
 
         booksList = (from b in _b?.GetList()
                      join c in model.CurrentCategory == 0 ? _c?.GetList()! : _c?.GetList(c => c.Id == model.CurrentCategory)! on b.CategoryId equals c.Id
@@ -94,9 +95,15 @@ public class AdminBookStoreController : Controller
                          Press = p.Name
                      });
 
-        model.PageCount = (int)Math.Ceiling(booksList.Count() / (double)pageSize);
+        StaticPageSaver.BooksCount = booksList.Count();
+
+        model.PageCount = (int)Math.Ceiling(StaticPageSaver.BooksCount / (double)pageSize);
         model.CurrentPage = model.PageCount < page ? model.PageCount : page <= 0 ? 1 : page;
         model.Books = booksList.Skip((model.CurrentPage - 1) * pageSize).Take(pageSize);
+
+        StaticPageSaver.Page = model.CurrentPage;
+        StaticPageSaver.Category = model.CurrentCategory;
+        StaticPageSaver.PageCount = model.PageCount;
 
         return View(model);
     }
@@ -164,14 +171,16 @@ public class AdminBookStoreController : Controller
             if (_flag) TempData["N"] = $"Book : {bvm.Name} added ;-)";
             else TempData["N"] = $"Book : {bvm.Name} has been added by YOU ;-)";
 
-            return RedirectToAction("Main");
+            StaticPageSaver.Page = (int)Math.Ceiling((StaticPageSaver.BooksCount + 1) / 10M) > StaticPageSaver.PageCount ? StaticPageSaver.PageCount + 1 : StaticPageSaver.PageCount;
+
+            return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
         }
         return View();
     }
 
     public IActionResult Delete(int id)
     {
-        List<Books> books = _b!.GetList();
+        List<Books> books = _b!.GetList().ToList();
         Books? book = _b!.Get(b => b.Id == id);
 
         _b.Delete(book);
@@ -191,7 +200,9 @@ public class AdminBookStoreController : Controller
         else
             TempData["N"] = $"Book : {book?.Name} was deleted ;-(";
 
-        return RedirectToAction("Main");
+        StaticPageSaver.Page = StaticPageSaver.PageCount < StaticPageSaver.Page ? StaticPageSaver.PageCount : StaticPageSaver.Page;
+
+        return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
     }
 
     public IActionResult Edit(int id)
@@ -244,7 +255,7 @@ public class AdminBookStoreController : Controller
                 else TempData["N"] = $"Book => {bvm.Name} has not been changed..(";
             }
 
-            return RedirectToAction("Main");
+            return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
         }
 
         return View();

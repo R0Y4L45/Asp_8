@@ -21,7 +21,7 @@ public class CartSessionService : ICartSessionService
             cartToCheck = _contextAccessor.HttpContext?.Session.GetObject<Cart>("cart");
         }
 
-        return cartToCheck;
+        return cartToCheck!;
     }
 
     public void SetCart(Cart cart) => _contextAccessor.HttpContext!.Session.SetObject("cart", cart);

@@ -10,7 +10,7 @@ public interface IEntityRepository<TEntity, TContext>
 {
     TContext Context { get; }
     TEntity Get(Expression<Func<TEntity, bool>> filter = null!);
-    List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null!);
+    IEnumerable<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null!);
     void Add(TEntity entity);
     void Delete(TEntity entity);
     bool Update(TEntity entity);

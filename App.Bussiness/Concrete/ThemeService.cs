@@ -27,7 +27,7 @@ public class ThemeService : IThemeService
     }
 
     public Theme Get(Expression<Func<Theme, bool>> filter = null!) => Context.Set<Theme>().FirstOrDefault(filter)!;
-    public List<Theme> GetList(Expression<Func<Theme, bool>> filter = null!) =>
+    public IEnumerable<Theme> GetList(Expression<Func<Theme, bool>> filter = null!) =>
         filter == null ? Context.Set<Theme>().ToList() : Context.Set<Theme>().Where(filter).ToList();
     public bool Update(Theme entity)
     {

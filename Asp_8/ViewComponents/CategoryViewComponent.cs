@@ -17,6 +17,6 @@ public class CategoryViewComponent : ViewComponent
         View(new CategoryViewModel
         {
             Categories = _categoryService.GetList(),
-            CurrentCategory = Convert.ToInt32(HttpContext.Request.Query["category"])
+            CurrentCategory = StaticPageSaver.Category
         });
 }

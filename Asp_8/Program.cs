@@ -57,11 +57,11 @@ public class Program
             pattern: "{admin}/{controller=AdminBookStore}/{action=Main}/{id?}"
             );
 
-        app.MapAreaControllerRoute(
-            name: "user_default",
-            areaName: "user",
-            pattern: "{user}/{controller=BookStore}/{action=Main}/{id?}"
-            );
+        //app.MapAreaControllerRoute(
+        //    name: "user_default",
+        //    areaName: "user",
+        //    pattern: "{user}/{controller=BookStore}/{action=Main}/{id?}"
+        //    );
 
         app.Run();
     }
