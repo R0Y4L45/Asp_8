@@ -27,7 +27,7 @@ public class Program
         builder.Services.AddSingleton<IAuthorService, AuthorService>();
         builder.Services.AddSingleton<IThemeService, ThemeService>();
         builder.Services.AddSingleton<IPressService, PressService>();
-
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -56,13 +56,6 @@ public class Program
             areaName: "admin",
             pattern: "{admin}/{controller=AdminBookStore}/{action=Main}/{id?}"
             );
-
-        //app.MapAreaControllerRoute(
-        //    name: "user_default",
-        //    areaName: "user",
-        //    pattern: "{user}/{controller=BookStore}/{action=Main}/{id?}"
-        //    );
-
         app.Run();
     }
 }

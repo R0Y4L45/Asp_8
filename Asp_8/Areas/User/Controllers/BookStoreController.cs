@@ -5,6 +5,7 @@ using BookStore.WebUI.Services;
 using Asp_8.Entites;
 using App.Entities.Entity;
 using App.Business.Concrete;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStore.WebUI.Areas.User.Controllers;
 
@@ -69,6 +70,9 @@ public class BookStoreController : Controller
 
         StaticPageSaver.Page = model.CurrentPage;
         StaticPageSaver.Category = model.CurrentCategory;
+
+        foreach (var i in HttpContext.Session.Keys)
+            Console.WriteLine(i);
 
         return View(model);
     }

@@ -1,27 +1,75 @@
 ﻿@model CartSummaryViewModel
 
-<ul style="margin-left:-200px !important;" class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <li>
-        <ul class="list-group">
+<div style="margin-left:-200px !important; z-index:1; width:300px;" class="dropdown-menu dropdown-menu2">
+    <ul class="list-group">
+        <li class="list-group-item d-flex">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center">Name of Books</th>
+                        <th class="text-center">Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cart!.CartLines)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <span class="text-center">@item.Book?.Name</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="input-group">
+                                    <button type="button" id="m @item.Book!.Id" class="btn btn-danger btn-number" onclick="minus(@item.Book!.Id)">-</button>
+                                    <input type="number" id="@item.Book.Id" class="form-control input-number myInput text-center" oninput="inputEvent(@item.Book.Id)" value="1" max="@item?.Book?.Count" />
+                                    <button type="button" id="p @item?.Book.Id" class="btn btn-success btn-number" onclick="plus(@item?.Book!.Id)">+</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </li>
+    </ul>
+    <div class="card-body">
+        <h5 class="card-title">Total => @Model.Cart.Total Azn</h5>
+        <a class="btn btn-primary" asp-controller="Cart" asp-action="List">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+            Go to cart details
+        </a>
+    </div>
+</div>
 
-            @foreach (var item in Model.Cart!.CartLines)
-            {
-                <li class="list-group-item">
-                    <a> @item.Book!.Name <span class="badge bg-success p-2 rounded text-white">@item.Quantity</span> </a>
-                </li>
-            }
-        </ul>
-    </li>
-    <li class="dropdown-divider"></li>
-    <li class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">@Model.Cart.Total Azn</h5>
-            <a class="btn btn-primary" asp-controller="Cart" asp-action="List">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                </svg>
-                Go to cart details
-            </a>
-        </div>
-    </li>
-</ul>
+<script>
+    const input = document.querySelectorAll("input"); 
+
+    window.onload = function () {
+        input.forEach(i => {
+            const savedValue = sessionStorage.getItem(i.id);
+            if (savedValue !== null)
+                i.value = +savedValue > +i.max ? +i.max : +savedValue;
+        });
+    }
+
+    function inputEvent(id) {
+        const i = document.getElementById(id)
+        i.value = +i.value > +i.max ? +i.max : +i.value < 1 ? +1 : i.value == '' ? +1 : +i.value;
+
+        sessionStorage.setItem(id, i.value)
+    }
+
+    function minus(id) {
+        const i = document.getElementById(id);
+        i.value = +i.value > 1 ? --i.value : 1;
+
+        sessionStorage.setItem(id, i.value)
+    }
+
+    function plus(id) {
+        const i = document.getElementById(id);
+        i.value = +i.value < +i.max ? ++i.value : +i.max;
+
+        sessionStorage.setItem(id, i.value)
+    }
+</script>
