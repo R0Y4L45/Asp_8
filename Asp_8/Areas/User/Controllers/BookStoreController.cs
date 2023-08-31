@@ -71,9 +71,6 @@ public class BookStoreController : Controller
         StaticPageSaver.Page = model.CurrentPage;
         StaticPageSaver.Category = model.CurrentCategory;
 
-        foreach (var i in HttpContext.Session.Keys)
-            Console.WriteLine(i);
-
         return View(model);
     }
 
@@ -81,6 +78,8 @@ public class BookStoreController : Controller
     {
         Books? b = _b?.Get(b => b.Id == Id);
         Cart? c = _cart?.GetCart();
+        
+        c!.Total = b!.Price;
 
         _cartService?.AddToCart(c!, b!);
         _cart?.SetCart(c!);
