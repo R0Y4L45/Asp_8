@@ -7,7 +7,6 @@ namespace BookStore.WebUI.ViewComponents;
 public class CartSummaryViewComponent : ViewComponent
 {
     private ICartSessionService _sessionService;
-
     public CartSummaryViewComponent(ICartSessionService sessionService)
     {
         _sessionService = sessionService;

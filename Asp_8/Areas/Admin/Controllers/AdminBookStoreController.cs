@@ -75,7 +75,8 @@ public class AdminBookStoreController : Controller
             Role = true
         };
 
-        model.CurrentCategory = categoryList?.Where(c => c.Id == category).Count() > 0 ? category : category >= categoryCount ? categoryList!.Last().Id : category < 0 ? 1 : 0;
+        if (categoryList?.Count() > 0)
+            model.CurrentCategory = categoryList?.Where(c => c.Id == category).Count() > 0 ? category : category >= categoryCount ? categoryList!.Last().Id : category < 0 ? 1 : 0;
 
         booksList = (from b in _b?.GetList()
                      join c in model.CurrentCategory == 0 ? _c?.GetList()! : _c?.GetList(c => c.Id == model.CurrentCategory)! on b.CategoryId equals c.Id
