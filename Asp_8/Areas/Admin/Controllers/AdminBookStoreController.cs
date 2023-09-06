@@ -197,9 +197,9 @@ public class AdminBookStoreController : Controller
             _c!.Delete(_c.Get(c => c.Id == book.CategoryId));
 
         if (!TempData.Keys.Contains("N"))
-            TempData.Add("N", $"Book : {book?.Name} was deleted ;-(");
+            TempData.Add("N", $"Book : {book?.Name} was deleted..!");
         else
-            TempData["N"] = $"Book : {book?.Name} was deleted ;-(";
+            TempData["N"] = $"Book : {book?.Name} was deleted..!";
 
         StaticPageSaver.Page = StaticPageSaver.PageCount < StaticPageSaver.Page ? StaticPageSaver.PageCount : StaticPageSaver.Page;
 
@@ -247,13 +247,13 @@ public class AdminBookStoreController : Controller
 
             if (!TempData.Keys.Contains("N"))
             {
-                if (flags.Contains(true)) TempData.Add("N", $"Book => {bvm.Name} has been changed..)");
-                else TempData.Add("N", $"Book => {bvm.Name} has not been changed..(");
+                if (flags.Contains(true)) TempData.Add("N", $"Book => {bvm.Name} has been changed...");
+                else TempData.Add("N", $"Book => {bvm.Name} has not been changed..!");
             }
             else
             {
-                if (flags.Contains(true)) TempData["N"] = $"Book => {bvm.Name} has been changed..)";
-                else TempData["N"] = $"Book => {bvm.Name} has not been changed..(";
+                if (flags.Contains(true)) TempData["N"] = $"Book => {bvm.Name} has been changed...";
+                else TempData["N"] = $"Book => {bvm.Name} has not been changed..!";
             }
 
             return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });

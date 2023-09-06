@@ -92,9 +92,9 @@ public class BookStoreController : Controller
                 Console.WriteLine("Yes");
 
             if (TempData.Keys.Contains("message"))
-                TempData["message"] = $"Your product, {b?.Name} was removed successfully from cart!";
+                TempData["message"] = $"Your product, {b?.Name} was removed successfully from cart..!";
             else
-                TempData.Add("message", $"Your product, {b?.Name} was removed successfully from cart!");
+                TempData.Add("message", $"Your product, {b?.Name} was removed successfully from cart..!");
         }
 
         return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
@@ -115,9 +115,9 @@ public class BookStoreController : Controller
             Console.WriteLine("Total => " + c!.Total);
 
             if (TempData.Keys.Contains("message"))
-                TempData["message"] = $"Your product, {b?.Name} was added successfully to cart!";
+                TempData["message"] = $"Your product, {b?.Name} was added successfully to cart...";
             else
-                TempData.Add("message", $"Your product, {b?.Name} was added successfully to cart!");
+                TempData.Add("message", $"Your product, {b?.Name} was added successfully to cart...");
         }
 
         return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });

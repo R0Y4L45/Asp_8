@@ -7,15 +7,15 @@
 
     @if (TempData["N"] != null && TempData["N"]?.ToString() != string.Empty)
     {
-        if (TempData["N"]?.ToString()?.Last() == ')')
+        if (TempData["N"]?.ToString()?.Last() == '!')
         {
-            <div class="alert alert-success animate__animated animate__bounceInLeft" role="alert">
+            <div class="alert alert-danger animate__animated animate__bounceInLeft" role="alert">
                 <strong>Success!</strong> @TempData["N"]?.ToString()
             </div>
         }
-        else if (TempData["N"]?.ToString()?.Last() == '(')
+        else
         {
-            <div class="alert alert-danger animate__animated animate__bounceInLeft" role="alert">
+            <div class="alert alert-success animate__animated animate__bounceInLeft" role="alert">
                 <strong>Success!</strong> @TempData["N"]?.ToString()
             </div>
         }
