@@ -179,7 +179,6 @@ public class AdminBookStoreController : Controller
         }
         return View();
     }
-
     public IActionResult Delete(int id)
     {
         List<Books> books = _b!.GetList().ToList();

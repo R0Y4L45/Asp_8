@@ -12,6 +12,7 @@ public class CartService : ICartService
         if (cartLine == null)
             cart.CartLines.Add(new CartLine { Quantity = 1, Book = book });
     }
+    public bool Contains(Cart cart, Books book) => cart.CartLines.FirstOrDefault(c => c.Book?.Id == book.Id) != null ? true : false;
     public List<CartLine> List(Cart cart) => cart.CartLines;
     public void RemoveFromCart(Cart cart, int productId) => cart.CartLines.Remove(cart.CartLines.FirstOrDefault(c => c.Book?.Id == productId)!);
 }

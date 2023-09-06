@@ -8,8 +8,12 @@ public class Cart
     {
         CartLines = new List<CartLine>();
     }
+
     //public decimal Total
     //{
+
     //    get => CartLines.Sum(c => c.Book!.Price * c.Quantity);
+    //    set { _total = value; }
     //}
+    //private decimal _total;
 }

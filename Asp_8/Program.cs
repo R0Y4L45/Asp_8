@@ -10,7 +10,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -28,7 +28,7 @@ public class Program
         builder.Services.AddSingleton<IThemeService, ThemeService>();
         builder.Services.AddSingleton<IPressService, PressService>();
         
-        var app = builder.Build();
+        WebApplication app = builder.Build();
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
@@ -56,6 +56,7 @@ public class Program
             areaName: "admin",
             pattern: "{admin}/{controller=AdminBookStore}/{action=Main}/{id?}"
             );
+
         app.Run();
     }
 }
