@@ -1,4 +1,4 @@
-﻿using BookStore.WebUI.Areas.User.Models;
+﻿using BookStore.WebUI.Models;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Text;
 
@@ -73,7 +73,7 @@ public class BooksTagHelper : TagHelper
         sb.AppendFormat("<td class=\"text-center\"> {0} </td>", item.Count);
         sb.AppendFormat("<td class=\"text-center\"> {0} </td>", item.Press);
         sb.AppendFormat("<td class=\"text-center\"> {0} </td>", item.Description);
-        sb.AppendFormat("<td class=\"text-center\"><ul class=\"list-inline mb-0\"><li class=\"list-inline-item dropdown\"><a class=\"text-muted dropdown-toggle font-size-18 px-2\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\"><i class=\"bx bx-dots-vertical-rounded\"></i></a><div class=\"dropdown-menu dropdown-menu-end\"><a class=\"dropdown-item link-info {1}\" href=\"/user/BookStore/Buy/{0}\"> Buy </a></div></li></ul></td>", item.BookId, css);
+        sb.AppendFormat("<td class=\"text-center\"><ul class=\"list-inline mb-0\"><li class=\"list-inline-item dropdown\"><a class=\"text-muted dropdown-toggle font-size-18 px-2\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\"><i class=\"bx bx-dots-vertical-rounded\"></i></a><div class=\"dropdown-menu dropdown-menu-end\"><a class=\"dropdown-item link-info {1}\" href=\"/User/BookStore/Buy/{0}\"> Buy </a></div></li></ul></td>", item.BookId, css);
         sb.Append("</tr>");
 
         return sb;
@@ -91,7 +91,7 @@ public class BooksTagHelper : TagHelper
         sb.AppendFormat("<td class=\"text-center\"> {0} </td>", item.Price);
         sb.AppendFormat("<td class=\"text-center\"> {0} </td>", item.Count);
         sb.AppendFormat("<td class=\"text-center\"> {0} </td>", item.Description);
-        sb.AppendFormat("<td class=\"text-center\"><ul class=\"list-inline mb-0\"><li class=\"list-inline-item dropdown\"><a class=\"text-muted dropdown-toggle font-size-18 px-2\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\"><i class=\"bx bx-dots-vertical-rounded\"></i></a><div class=\"dropdown-menu dropdown-menu-end\"><a class=\"dropdown-item link-danger\" href=\"/admin/AdminBookStore/delete/{0}\"> Delete </a><a class=\"dropdown-item link-info\" href = \"/admin/AdminBookStore/edit/{0}\"> Edit </a></div></li></ul></td>", item.BookId);
+        sb.AppendFormat("<td class=\"text-center\"><ul class=\"list-inline mb-0\"><li class=\"list-inline-item dropdown\"><a class=\"text-muted dropdown-toggle font-size-18 px-2\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\"><i class=\"bx bx-dots-vertical-rounded\"></i></a><div class=\"dropdown-menu dropdown-menu-end\"><a class=\"dropdown-item link-danger\" href=\"/Admin/AdminBookStore/delete/{0}\"> Delete </a><a class=\"dropdown-item link-info\" href = \"/Admin/AdminBookStore/edit/{0}\"> Edit </a></div></li></ul></td>", item.BookId);
         sb.Append("</tr>");
 
         return sb;

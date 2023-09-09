@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BookStore.WebUI.Areas.User.Models;
+using BookStore.WebUI.Models;
 using App.Business.Abstract;
 using BookStore.WebUI.Services;
 using Asp_8.Entites;
 using App.Entities.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookStore.WebUI.Areas.User.Controllers;
 
 [Area("User")]
+[Authorize(Roles = "User, Admin")]
 public class BookStoreController : Controller
 {
     private readonly ICategoryService? _c;
@@ -97,7 +99,7 @@ public class BookStoreController : Controller
                 TempData.Add("message", $"Your product, {b?.Name} was removed successfully from cart..!");
         }
 
-        return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
+        return RedirectToAction("Main", new { area = "User", page = StaticPageSaver.Page, category = StaticPageSaver.Category });
     }
 
     public IActionResult Buy(int Id)
@@ -120,7 +122,7 @@ public class BookStoreController : Controller
                 TempData.Add("message", $"Your product, {b?.Name} was added successfully to cart...");
         }
 
-        return RedirectToAction("Main", new { page = StaticPageSaver.Page, category = StaticPageSaver.Category });
+        return RedirectToAction("Main", new { area = "User", page = StaticPageSaver.Page, category = StaticPageSaver.Category });
     }
 
     [Route("User/Plus_Minus")]
@@ -139,7 +141,7 @@ public class BookStoreController : Controller
                 {
                     bool flag = int.Parse(arr[1]) > 0 ? true : false;
                     int difference;
-                    
+
                     if (flag)
                     {
                         difference = int.Parse(arr[1]) - cartLine!.Quantity;
@@ -152,7 +154,7 @@ public class BookStoreController : Controller
                         cart.Total -= difference * cartLine!.Book!.Price;
                         cartLine!.Quantity = -1 * int.Parse(arr[1]);
                     }
-                    
+
                     _cart!.SetCart(cart);
                 }
             }

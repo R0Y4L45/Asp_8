@@ -1,4 +1,4 @@
-﻿using BookStore.WebUI.Areas.User.Models;
+﻿using BookStore.WebUI.Models;
 using BookStore.WebUI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;

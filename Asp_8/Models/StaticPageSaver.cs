@@ -1,4 +1,4 @@
-﻿namespace BookStore.WebUI.Areas.User.Models;
+﻿namespace BookStore.WebUI.Models;
 
 public static class StaticPageSaver
 {

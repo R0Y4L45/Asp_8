@@ -2,15 +2,17 @@
 using Asp_8.DataBaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace App.Entities.Migrations;
 
 [DbContext(typeof(BookStoreDbContext))]
-partial class BookStoreDbContextModelSnapshot : ModelSnapshot
+[Migration("20230908151859_BookStoreMigration")]
+partial class BookStoreMigration
 {
-	protected override void BuildModel(ModelBuilder modelBuilder)
+	protected override void BuildTargetModel(ModelBuilder modelBuilder)
 	{
 #pragma warning disable 612, 618
 		modelBuilder

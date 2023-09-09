@@ -1,7 +1,9 @@
 using App.Business.Abstract;
 using App.Business.Concrete;
 using Asp_8.DataBaseContext;
+using BookStore.WebUI.Entities;
 using BookStore.WebUI.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.WebUI;
@@ -17,9 +19,23 @@ public class Program
 
         string conn = builder.Configuration.GetConnectionString("default");
         builder.Services.AddDbContext<BookStoreDbContext>(x => x.UseSqlServer(conn));
+        builder.Services.AddDbContext<CustomIdentityDbContext>(x => x.UseSqlServer(conn));
+
+        builder.Services.AddIdentity<CustomIdentityUser, CustomIdentityRole>(opt => opt.Password.RequiredLength = 3)
+			.AddEntityFrameworkStores<CustomIdentityDbContext>()
+            .AddDefaultTokenProviders();
+
         builder.Services.AddSession();
 
-        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+		//builder.Services.AddAuthorization(options =>
+		//{
+		//	options.AddPolicy("RequireAdminRole", policy =>
+		//	{
+		//		policy.RequireRole("Admin");
+		//	});
+		//});
+
+		builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         builder.Services.AddSingleton<ICartSessionService, CartSessionService>();
         builder.Services.AddSingleton<ICartService, CartService>();
         builder.Services.AddSingleton<ICategoryService, CategoryService>();
@@ -45,16 +61,23 @@ public class Program
         app.UseRouting();
 
         app.UseAuthorization();
+        app.UseAuthentication();
+
+        //app.MapControllerRoute(
+        //    name: "userArea",
+        //    pattern: "User/{controller=BookStore}/{action=Main}/{id?}",
+        //    defaults: new { area = "User" }
+        //    );
+
+        //app.MapControllerRoute(
+        //    name: "adminArea",
+        //    pattern: "Admin/{controller=AdminBookStore}/{action=Main}/{id?}",
+        //    defaults: new { area = "Admin" }
+        //    );
 
         app.MapControllerRoute(
             name: "default",
-            pattern: "{area:exists?}/{controller=BookStore}/{action=Main}/{id?}"
-            );
-
-        app.MapAreaControllerRoute(
-            name: "admin_default",
-            areaName: "admin",
-            pattern: "{admin}/{controller=AdminBookStore}/{action=Main}/{id?}"
+            pattern: "{controller=Account}/{action=LogIn}/{id?}"
             );
 
         app.Run();
